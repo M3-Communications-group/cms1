@@ -1,0 +1,26 @@
+<PUBLIC:COMPONENT>
+<PUBLIC:ATTACH EVENT="onmouseover" ONEVENT="liteup()" />
+<PUBLIC:ATTACH EVENT="onmouseout"  ONEVENT="litedown()" />
+<PUBLIC:ATTACH EVENT="onmousedown"  ONEVENT="shout()" />
+<PUBLIC:ATTACH EVENT="onmouseup"  ONEVENT="liteup()" />
+<SCRIPT language="JavaScript">
+//this file is generally used for the editor incorporated in the content management sys.
+function liteup() {
+//$BlackC
+	this.style.borderColor = '#444444';
+//$whiteC
+	this.style.backgroundColor = '#ffffff';
+	this.style.cursor = 'hand';	
+}
+function litedown (){
+//$NormalC
+	this.style.borderColor = '#e4e4e4';  
+//$NormalC
+	this.style.backgroundColor = '#e4e4e4';
+}
+function shout (){
+//$specialC
+	this.style.backgroundColor="#FEEAC0";
+}
+</SCRIPT>
+</PUBLIC:COMPONENT>
