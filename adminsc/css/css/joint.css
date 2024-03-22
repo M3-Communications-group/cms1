@@ -1,0 +1,39 @@
+table#form_avtomobili td.bordered { border: 1px solid #F0E2CA; padding: 5px 10px 7px 10px; }
+table#form_avtomobili td.dark { background-color: #EFEDE1; }
+table#form_avtomobili select { width: 150px; margin: 3px 0px 0px 0px; }
+table#form_avtomobili input { width: 150px; margin: 3px 0px 0px 0px; }
+table#form_avtomobili textarea { width: 360px; margin: 3px 0px 0px 0px; }
+
+table#form_avtomobili tr.bordered { border: 1px solid #F0E2CA;}
+table#form_avtomobili tr.bordered td { padding: 5px 10px 7px 10px; }
+table#form_avtomobili tr.dark { background-color: #EFEDE1; }
+
+table#form_search_offer td.bordered { border: 1px solid #F0E2CA; padding: 5px 10px 7px 10px; }
+table#form_search_offer td.dark { background-color: #EFEDE1; }
+table#form_search_offer select { width: 150px; margin: 3px 0px 0px 0px; }
+table#form_search_offer input { width: 150px; margin: 3px 0px 0px 0px; }
+table#form_search_offer textarea { width: 360px; margin: 3px 0px 0px 0px; }
+table#form_search_offer select.date_day { width: auto; }
+table#form_search_offer select.date_month { width: 85px; }
+table#form_search_offer select.date_year { width: auto; }
+
+#rednav a { color: #000000; background-color: #F2E9D0; border-left: 2px solid #F9F3EA; padding: 2px 5px 2px 5px; display: block; float: left; }
+#rednav #active{ color: #FFFFFF; background-color: #B91208; border-left: 2px solid #F9F3EA; padding: 2px 5px 2px 5px; display: block; float: left; }
+#rednav { border-bottom: 3px solid #B91208; }
+
+div.left { float: left; }
+
+input:focus, select:focus, textarea:focus  { background-color: #F0E2CA; }
+
+table#form_zaiavka td { text-align: left; padding: 5px 10px 7px 10px; }
+table#form_zaiavka td.bordered { border: 1px solid #F0E2CA; }
+table#form_zaiavka td.dark { background-color: #EFEDE1; }
+table#form_zaiavka select { width: 100px; margin: 3px 0px 0px 0px; }
+table#form_zaiavka input { width: 250px; margin: 3px 0px 0px 0px; }
+table#form_zaiavka textarea { width: 360px; margin: 3px 0px 0px 0px; }
+
+table#form_zaiavka td.border_left { border-left: 1px solid #F0E2CA; border-bottom: 1px solid #F0E2CA; }
+table#form_zaiavka td.border_right { border-right: 1px solid #F0E2CA; border-bottom: 1px solid #F0E2CA; }
+
+table#form_zaiavka tr.dark { background-color: #EFEDE1; }
+

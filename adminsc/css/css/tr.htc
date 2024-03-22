@@ -1,0 +1,35 @@
+<PUBLIC:COMPONENT>
+<PUBLIC:ATTACH EVENT="onmouseover" ONEVENT="liteup()" />
+<PUBLIC:ATTACH EVENT="onmouseout"  ONEVENT="litedown()" />
+<PUBLIC:ATTACH EVENT="onclick"  ONEVENT="mark()" />
+<SCRIPT language="JavaScript">
+function liteup() {
+	
+	if (!this.marked){
+		var oldbg
+		oldbg=this.style.BackgroundColor
+		//$specialC
+		this.oldbg=this.style.backgroundColor;
+		this.style.backgroundColor="#EFEDE1";
+	}
+}
+function litedown (){
+	if (!this.marked){
+		//$whiteC
+		this.style.backgroundColor=this.oldbg;
+	}
+}
+
+function mark (){
+	this.marked=(this.marked)?0:1;
+	if (this.marked) {
+		this.olebg=this.style.backgroundColor;
+		this.style.backgroundColor='';
+	}
+	else {
+		this.style.backgroundColor=this.olebg;
+	}
+}
+
+</SCRIPT>
+</PUBLIC:COMPONENT>
