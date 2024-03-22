@@ -90,6 +90,8 @@
     </script>
 </head>
 
+
+
 <body>
     <?php
     if (empty($_GET["hide_nav"])) {
