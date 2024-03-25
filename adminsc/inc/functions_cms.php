@@ -17,7 +17,7 @@ function make_menu($pid)
                 make_menu($row["id"]);
             }
         }
-        $menu_html[$row["level"]] .= '<div class="menu-text menu_lvl' . $row["level"] . $is_active . '"><a href="' . $row["filename"] . '?admin_option=' . $row["id"] . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $row["name"] . '</a></div>';
+        $menu_html[$row["level"]] .= '<li class="menu-item menu_lvl' . $row["level"] . $is_active . '"><a class="menu-link" href="' . $row["filename"] . '?admin_option=' . $row["id"] . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $row["name"] . '</a></li>';
     }
 }
 
