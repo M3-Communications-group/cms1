@@ -37,13 +37,13 @@ function make_menu($pid)
 
             } else if ($row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0" href="#menuCms" data-bs-toggle="collapse">';
+                $menu_html .=    '<a class="menu-link menu_lvl0" href="#menu'. $row['name'] .'" data-bs-toggle="collapse">';
                 $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
 
                 if ($row['has_children'] == 1) { //Lets create the sub menus
-                    $menu_html .= '<div class="collapse" id="menuCms">';
+                    $menu_html .= '<div class="collapse" id="menu' . $row['name'] .'">';
                     $menu_html .= '<ul class="sub-menu">';
 
                     $myquery = 'select * from  m3cms_sitemap where pid>0 and pid='. $row['id'] .' order by pid'; //Select all the children of the current parent
