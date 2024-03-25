@@ -80,19 +80,20 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
     make_menu(0);
     $additional = '';
 
+    // Adding Navigation FUnctions to menu
   if ($_SESSION['m3cms']["group_id"] == 0) {
+
     $menu_html[0] .= '<li class="menu-title">Navigation</li>';
     $menu_html[0] .= '<li class="menu-item">';
-    $menu_html[0] .= '<a href="#menuCms" data-bs-toggle="collapse" class="menu-link">';
-    $menu_html[0] .= '<span class="menu-icon"><i data-feather="airplay"></i></span>';
-    $menu_html[0] .= '<span class="menu-text"> CMS </span>';
-    $menu_html[0] .= '</a>';
-    $menu_html[0] .= '<div class="collapse" id="menuCms">';
-    $menu_html[0] .= '<ul class="sub-menu">';
-    $menu_html[0] .= '<li class="menu-item"><a href="main.php?admin_option=0&action=view&table=m3cms_sitemap" class="menu-link"><span class="menu-text">List</span></a></li>';
-    $menu_html[0] .= '<li class="menu-item"><a href="main.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link"><span class="menu-text">Add</span></a></li>';
-    $menu_html[0] .= '</ul>';
-    $menu_html[0] .= '</div>';
+    $menu_html[0] .=    '<a href="#menuCms" data-bs-toggle="collapse" class="menu-link">';
+    $menu_html[0] .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
+    $menu_html[0] .=        '<span class="menu-text"> CMS </span>';
+    $menu_html[0] .=    '</a>';
+    $menu_html[0] .=    '<div class="collapse" id="menuCms">';
+    $menu_html[0] .=        '<ul class="sub-menu">';
+    $menu_html[0] .=            '<li class="menu-item"><a href="main.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link"><span class="menu-text">Add</span></a></li>';
+    $menu_html[0] .=        '</ul>';
+    $menu_html[0] .=    '</div>';
     $menu_html[0] .= '</li>';
 };
 

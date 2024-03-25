@@ -118,15 +118,17 @@
 
                                     <ul class="menu">
                                         <?php
+
                                         foreach ($menu_html as $menu_item) {
                                             echo $menu_item;
                                         }
+
                                         ?>
                                     </ul>
                                 </ul>
 
-                                    <!--- End Menu -->
-                                    <div class="clearfix"></div>
+                                <!--- End Menu -->
+                                <div class="clearfix"></div>
                             </div>
                         </div>
 
