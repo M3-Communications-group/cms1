@@ -28,7 +28,7 @@ function make_menu($pid)
         $menu_html .= '<li class="menu-title">Main menu</li>';
 
         while ($row = mysqli_fetch_array($myResult)) {
-            if ($row['pid'] == 0) {
+            if ($row['pid'] == 0 && $row['id'] > 14) {
                 $menu_html .= '<li class="menu-item">';
                 $menu_html .=    '<a class="menu-link" href="#menuCms" data-bs-toggle="collapse">';
                 $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
