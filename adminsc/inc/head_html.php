@@ -21,13 +21,12 @@
     <link rel="stylesheet" href="css\bootstrap.min.css">
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="js\app.min.js"></script>
     <script src="js\head.js"></script>
     <script src="js\vendor.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
     <!-- END BOOTSTRAP IMPLEMENTATION -->
 
     <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
@@ -127,16 +126,13 @@
                                     ?>
                                 </ul>
 
-                                        <?php
-                                        foreach ($menu_html as $menu_item) {
-                                            echo $menu_item;
-                                        }
-                                        ?>
-                                    </ul>
+
+
+
+
 
 
                                    <!--- End Menu -->
-                                    <!--- End Menu -->
                                     <div class="clearfix"></div>
                             </div>
                         </div>
@@ -260,6 +256,8 @@
 
                                         <!-- User Dropdown -->
                                         <li class="dropdown">
+
+
                                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                                 <img src="images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                                                 <span class="ms-3 d-none d-md-inline-block">
@@ -292,7 +290,11 @@
                             </div>
                             <!-- ========== Topbar End ========== -->
 
+
+
                             
+
+
                             <div class="content">
 
                                 <!-- Start Content-->
@@ -342,7 +344,6 @@
                                             . '<h2>' . $pname . '</h2>'
                                             . (($show_viewadd) ? $menu_viewadd : '')
                                             . '<div class="clear"></div>';
-                                        echo '</td><td valign="top"> <div style="margin: 0px 0px 0px 20px;">' . '<h2>' . $pname . '</h2>' . (($show_viewadd) ? $menu_viewadd : '') . '<div class="clear"></div>';
                                     }
                                 } else {
                                     echo $menu_viewadd;
@@ -356,22 +357,7 @@
                             </div> <!-- content -->
                         </div>
                     </div>
-                    <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div><script>document.write(new Date().getFullYear())</script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
-                                    <a href="javascript: void(0);">About</a>
-                                    <a href="javascript: void(0);">Support</a>
-                                    <a href="javascript: void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+
                     <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -476,13 +462,33 @@
 
                                                 mmmyform.submit();
                                             }
-                                        </script><input class="btn btn-primary" type="Submit" value="Save" id="submit">
+                                        </script> <!-- <input class="btn btn-primary" type="Submit" value="Save" id="submit"> -->
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary">Guardar cambios</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Send Changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                 
+
+
+                    <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
