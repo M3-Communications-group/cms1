@@ -21,25 +21,32 @@ function make_menu($pid)
     // }
 
     if ($_SESSION['m3cms']["group_id"] == 0) {
-        $myquery = "select * from  m3cms_sitemap order by pid"; //Select all the table
+        $myquery = "select * from  m3cms_sitemap where pid=0 order by pid"; //Select all the table
         $myResult = query($myquery); //Run the Query
 
         $menu_html = ""; //Inicialize the global  variable to empty
         $menu_html .= '<li class="menu-title">Main menu</li>';
 
         while ($row = mysqli_fetch_array($myResult)) {
-            if ($row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
+            if ($row['has_children'] == 0 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link" href="#" data-bs-toggle="collapse">';
+                $menu_html .=    '<a class="menu-link menu_lvl0" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '" data-bs-toggle="collapse">';
+                $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
+                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
+                $menu_html .=    '</a>';
+
+            } else if ($row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
+                $menu_html .= '<li class="menu-item">';
+                $menu_html .=    '<a class="menu-link menu_lvl0" href="#menuCms" data-bs-toggle="collapse">';
                 $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
 
                 if ($row['has_children'] == 1) { //Lets create the sub menus
-                    $menu_html .= '<div class="collapse" id="menu' . $row['name'] . '">';
+                    $menu_html .= '<div class="collapse" id="menuCms">';
                     $menu_html .= '<ul class="sub-menu">';
 
-                    $myquery = 'select * from  m3cms_sitemap order by pid'; //Select all the children of the current parent
+                    $myquery = 'select * from  m3cms_sitemap where pid>0 and pid='. $row['id'] .' order by pid'; //Select all the children of the current parent
                     $myResult2 = query($myquery); //Run the Query
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
@@ -56,6 +63,7 @@ function make_menu($pid)
                 $menu_html .= '</li>'; // Close menu-item li
 
             }
+
         }
     }
 }
