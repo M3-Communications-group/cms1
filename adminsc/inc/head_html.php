@@ -114,14 +114,16 @@
                                         <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
                                     </div>
 
-                                    <li class="menu-title">Main Menu</li>
 
                                     <ul class="menu">
                                         <?php
 
-                                        foreach ($menu_html as $menu_item) {
-                                            echo $menu_item;
-                                        }
+                                        // foreach ($menu_html as $menu_item) {
+                                        //     echo $menu_item;
+                                        // }
+
+                                        echo $menu_html;
+
 
                                         ?>
                                     </ul>
