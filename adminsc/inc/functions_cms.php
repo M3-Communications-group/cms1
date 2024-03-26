@@ -51,7 +51,7 @@ function make_menu($pid)
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
                         $menu_html .=   '<li class="menu-item">
-                                            <a class="menu-link" href="' . $child['filename'] . '?admin_option' . $child['id'] . '">
+                                            <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
                                                 <span class="menu-text">' . $child['name'] . '</span>
                                             </a>
                                         </li>';
