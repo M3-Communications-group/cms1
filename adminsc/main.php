@@ -102,6 +102,14 @@ if ($action == 'view') {
                         mmmyform.submit();
                     } 
 		</script>';
+        echo '
+        <script>
+                var inputs = document.getElementsByTagName("input");
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].classList.add("form-control");
+                }
+        </script>
+        ';
             echo '<input type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit" class="btn btn-primary">';
             echo '</form></td></tr></table>';
 
