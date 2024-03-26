@@ -1435,9 +1435,9 @@ function commit($fields_to_manage, $table)
                             if (preg_match('/[0-9]+/', $img_params[0], $m)) {
                                 $newfilename .= '_' . $m[0];
                             }
-                            if (preg_match('/[0-9]+/', $img_params[1], $m)) {
-                                $newfilename .= 'x' . $m[1];
-                            }
+                            // if (preg_match('/[0-9]+/', $img_params[1], $m)) {
+                            //     $newfilename .= 'x' . $m[1];
+                            // }
                             $autocopyDIR = (isset($item["path"]) ? $item["path"] : "../");
                             $autocopyURL = $item["upload_dir"] . "/" . $newfilename . ".jpg";
                             imagejpeg($im_dst, $autocopyDIR . $autocopyURL, 95);

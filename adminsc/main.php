@@ -16,26 +16,26 @@ if (isset($commit_result)) {
     }
 }
 
-if (($action == 'edit' && !empty($_GET["editID"])) || $action == 'add') {
-    echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
-    echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
-			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
-    $doonsubmit = '';
-    if (!empty($edit_additional_stuff_top)) {
-        echo "" . $edit_additional_stuff_top . "";
-    }
-    if (empty($custom_form)) {
-    } else {
-        echo $custom_form;
-    }
-    if (!empty($_GET["editID"])) {
-        echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
-    }
-    if (!empty($edit_additional_stuff_bottom)) {
-        echo additional_stuff();
-    }
-    
-}
+// if (($action == 'edit' && !empty($_GET["editID"])) || $action == 'add') {
+//     echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
+//     echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
+// 			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
+//     $doonsubmit = '';
+//     if (!empty($edit_additional_stuff_top)) {
+//         echo "" . $edit_additional_stuff_top . "";
+//     }
+//     if (empty($custom_form)) {
+//     } else {
+//         echo $custom_form;
+//     }
+//     if (!empty($_GET["editID"])) {
+//         echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
+//     }
+//     if (!empty($edit_additional_stuff_bottom)) {
+//         echo additional_stuff();
+//     }
+// }
+
 if ($action == 'view') {
     if (!empty($view_additional_stuff_top)) {
         echo "" . $view_additional_stuff_top . "";
@@ -53,7 +53,7 @@ if ($action == 'view') {
 <!-- Modal -->
 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content px-1 py-5" style="width: 40vw; display">
+        <div class="modal-content px-1 py-5" style="width: 30vw; display">
             <div class="modal-header">
                 <h5 class="modal-title" id="Modal">Add menu</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -62,29 +62,30 @@ if ($action == 'view') {
             </div>
 
             <?php
-            
-    echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
-    echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
+
+
+            echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
+            echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
 			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
-    $doonsubmit = '';
-    if (!empty($edit_additional_stuff_top)) {
-        echo "" . $edit_additional_stuff_top . "";
-    }
-    if (empty($custom_form)) {
-        foreach ($fields_to_manage as $key => $val) {
-            
-            echo make_form_item($val, $current_item);
-        }
-    } else {
-        echo $custom_form;
-    }
-    if (!empty($_GET["editID"])) {
-        echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
-    }
-    if (!empty($edit_additional_stuff_bottom)) {
-        echo additional_stuff();
-    }
-    echo '
+            $doonsubmit = '';
+            if (!empty($edit_additional_stuff_top)) {
+                echo "" . $edit_additional_stuff_top . "";
+            }
+            if (empty($custom_form)) {
+                foreach ($fields_to_manage as $key => $val) {
+
+                    echo make_form_item($val, $current_item);
+                }
+            } else {
+                echo $custom_form;
+            }
+            if (!empty($_GET["editID"])) {
+                echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
+            }
+            if (!empty($edit_additional_stuff_bottom)) {
+                echo additional_stuff();
+            }
+            echo '
 		<script language="JavaScript">
                     function content_doonsubmit(mmmyform) { 
                             ' . (!empty($doonsubmit) ? $doonsubmit : '') . ' 
@@ -98,14 +99,14 @@ if ($action == 'view') {
                                 }
                             }
                         ' : '')
-    . '
+                . '
                         mmmyform.submit();
                     } 
 		</script>';
-    echo '<input type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit" class="btn btn-primary">';
-    echo '</form></td></tr></table>';
+            echo '<input type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit" class="btn btn-primary">';
+            echo '</form></td></tr></table>';
 
-            
+
             ?>
 
         </div>
