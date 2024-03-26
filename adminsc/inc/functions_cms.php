@@ -36,19 +36,18 @@ function make_menu($pid)
                 $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
-
             } else if ($row['has_children'] == 1 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu'. $row['id'] .'" data-bs-toggle="collapse">';
+                $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
                 $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
 
                 if ($row['has_children'] == 1) { //Lets create the sub menus
-                    $menu_html .= '<div class="collapse" id="menu' . $row['id'] .'">';
+                    $menu_html .= '<div class="collapse" id="menu' . $row['id'] . '">';
                     $menu_html .=   '<ul class="sub-menu">';
 
-                    $myquery = 'select * from  m3cms_sitemap where pid>0 and pid='. $row['id'] .' order by pid'; //Select all the children of the current parent
+                    $myquery = 'select * from  m3cms_sitemap where pid>0 and pid=' . $row['id'] . ' order by pid'; //Select all the children of the current parent
                     $myResult2 = query($myquery); //Run the Query
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
@@ -65,7 +64,6 @@ function make_menu($pid)
                 $menu_html .= '</li>'; // Close menu-item li
 
             }
-
         }
     }
 }
@@ -117,6 +115,27 @@ function locate_position($sitemap_id)
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
                         $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+
+
+                        $menu_viewadd .= '
+                        <!-- Modal -->
+                        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="Modal">Add menu</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">';
+
+                        $menu_viewadd .= '';
+
+                        $menu_viewadd .= '
+                                </div>
+
+                            </div>
+                          </div>
+                        </div>';
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
@@ -125,7 +144,6 @@ function locate_position($sitemap_id)
                     $_SESSION['m3cms']["perm_add"] = $row["perm_add"];
                     $_SESSION['m3cms']["perm_edit"] = $row["perm_edit"];
                     $_SESSION['m3cms']["perm_del"] = $row["perm_del"];
-                    
                 }
             }
         }

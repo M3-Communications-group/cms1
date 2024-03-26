@@ -92,7 +92,7 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
         $menu_html .=    '<div class="collapse" id="menuCms">';
         $menu_html .=        '<ul class="sub-menu">';
         $menu_html .=            '<li class="menu-item ms-3">
-                                        <a href="main.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link">
+                                        <a href="main.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link" data-bs-toggle="modal" data-bs-target="#Modal">
                                             <span class="menu-text">Add</span>
                                         </a>
                                     </li>';

@@ -2,6 +2,8 @@
 
 require("inc/head.php");
 
+
+
 if (isset($commit_result)) {
     if ($commit_result[0]) {
         //gen_google_sitemap();
@@ -13,6 +15,7 @@ if (isset($commit_result)) {
         echo '<div class="err">' . $commit_result[1] . '</div>';
     }
 }
+
 if (($action == 'edit' && !empty($_GET["editID"])) || $action == 'add') {
     echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
     echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>

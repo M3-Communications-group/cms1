@@ -341,6 +341,4 @@
                             </div> <!-- content -->
                         </div>
                     </div>
-                    <?php
-                    require('modal.php');
-                    ?>
+                    
