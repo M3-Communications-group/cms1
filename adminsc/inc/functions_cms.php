@@ -116,26 +116,7 @@ function locate_position($sitemap_id)
                     if ($row["perm_add"] > 0) {
                         $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
 
-
-                        $menu_viewadd .= '
-                        <!-- Modal -->
-                        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="Modal">Add menu</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">';
-
-                        $menu_viewadd .= '';
-
-                        $menu_viewadd .= '
-                                </div>
-
-                            </div>
-                          </div>
-                        </div>';
+                        
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
