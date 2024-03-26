@@ -80,13 +80,26 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
     make_menu(0);
     $additional = '';
 
+    // Adding Navigation FUnctions to menu
     if ($_SESSION['m3cms']["group_id"] == 0) {
-        $menu_html[0] .= '<div class="menu_lvl0' . (($table == 'm3cms_sitemap') ? "_active" : "") . '"><a href="main.php?admin_option=0&action=view&table=m3cms_sitemap">CMS</a></div>';
-        if ($table === 'm3cms_sitemap') {
-            $menu_viewadd .= '<div class="menu_lvl_viewadd"><a href="main.php?admin_option=0&action=view&table=m3cms_sitemap">List</a></div>';
-            $menu_viewadd .= '<div class="menu_lvl_viewadd"><a href="main.php?admin_option=0&action=add&table=m3cms_sitemap">Add</a></div>';
-        }
-    }
+
+        $menu_html .= '<li class="menu-title">Navigation</li>';
+        $menu_html .= '<li class="menu-item">';
+        $menu_html .=    '<a class="menu-link" href="#menuCms" data-bs-toggle="collapse">';
+        $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
+        $menu_html .=        '<span class="menu-text"> CMS </span>';
+        $menu_html .=    '</a>';
+        $menu_html .=    '<div class="collapse" id="menuCms">';
+        $menu_html .=        '<ul class="sub-menu">';
+        $menu_html .=            '<li class="menu-item">
+                                        <a href="main.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link">
+                                            <span class="menu-text">Add</span>
+                                        </a>
+                                    </li>';
+        $menu_html .=        '</ul>';
+        $menu_html .=    '</div>';
+        $menu_html .= '</li>';
+    };
 
 
     $exclude_vars = array('delID', 'showordermove', 'showorderfield', 'active_new_status', 'active_field');
@@ -153,7 +166,7 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
         $current_item = $_POST;
     } else {
         $current_item = array();
-        if (( preg_match("/edit|showorder|active/", $action) && $editID > 0 && ($_SESSION['m3cms']["perm_edit"] == '1' or $_SESSION['m3cms']["perm_edit"] == '2') ) || ($action == 'del' && $editID > 0 && ($_SESSION['m3cms']["perm_del"] == '1' or $_SESSION['m3cms']["perm_del"] == '2') )) {
+        if ((preg_match("/edit|showorder|active/", $action) && $editID > 0 && ($_SESSION['m3cms']["perm_edit"] == '1' or $_SESSION['m3cms']["perm_edit"] == '2')) || ($action == 'del' && $editID > 0 && ($_SESSION['m3cms']["perm_del"] == '1' or $_SESSION['m3cms']["perm_del"] == '2'))) {
 
             $where = '';
             if ($_SESSION['m3cms']["perm_edit"] == '2' && check_field_exists($table, "user_id")) {
