@@ -160,8 +160,8 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
 
     if ($_SERVER["REQUEST_METHOD"] == 'POST' && !preg_match("/^(change_password|memcached)\.php$/i", $localfile) && preg_match("/^(edit|add)$/", $action)) {
        
-    }
- $commit_result = commit($fields_to_manage, $table);
+    } $commit_result = commit($fields_to_manage, $table);
+
     if ($_SERVER["REQUEST_METHOD"] == 'POST' && !$commit_result[0] && preg_match("/^(edit|add)$/", $action)) {
         $current_item = $_POST;
     } else {

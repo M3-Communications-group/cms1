@@ -946,7 +946,7 @@ function commit($fields_to_manage, $table)
             }
             switch ($item["check_type"]) {
                 case "text_nohtml":
-                    if (preg_match("/(<\/?)(\w+)([^>]*>)/", $_POST[$item["name"]])) {
+                    if (preg_match("/(<\/?)(\w+)([^>]*>)/", @$_POST[$item["name"]])) {
                         $err .= "" . $admin_texts[$lang]["is_invalid"] . " " . $item["title"] . "<br>";
                     }
                     break;
@@ -1002,7 +1002,7 @@ function commit($fields_to_manage, $table)
                 }
             }
 
-            if (is_array($_POST[$item["name"]])) {
+            if (@is_array($_POST[$item["name"]])) {
 
                 $tmp3 = '';
                 foreach ($_POST[$item["name"]] as $tmp1 => $tmp2) {
@@ -1036,7 +1036,7 @@ function commit($fields_to_manage, $table)
                         $myquery_exec_later[$item["external_table"]] .= ", `" . $item["name"] . "` = '" . $_POST[$item["name"]] . "'";
                     }
                 } else {
-                    $myquery .= "`" . $item["name"] . "` = " . (($_POST[$item["name"]] === 'NULL') ? "NULL" : "'" . $_POST[$item["name"]] . "'") . ", ";
+                    @$myquery .= "`" . $item["name"] . "` = " . (($_POST[$item["name"]] === 'NULL') ? "NULL" : "'" . $_POST[$item["name"]] . "'") . ", ";
                 }
             }
         } elseif ($item["type"] == 'auto') {
@@ -1124,7 +1124,7 @@ function commit($fields_to_manage, $table)
                 $myquery1 = "select max(showorder) from `$table` ";
                 //if(in_array('level', $auto)) {
                 if (check_field_exists($table, 'pid')) {
-                    $myquery1 .= " where pid = '" . $_POST["pid"] . "'";
+                    @$myquery1 .= " where pid = '" . $_POST["pid"] . "'";
                 }
                 $MyResult1 = query($myquery1);
                 $row1 = mysqli_fetch_row($MyResult1);
@@ -1435,9 +1435,9 @@ function commit($fields_to_manage, $table)
                             if (preg_match('/[0-9]+/', $img_params[0], $m)) {
                                 $newfilename .= '_' . $m[0];
                             }
-                            // if (preg_match('/[0-9]+/', $img_params[1], $m)) {
-                            //     $newfilename .= 'x' . $m[1];
-                            // }
+                            if (preg_match('/[0-9]+/', $img_params[1], $m)) {
+                                @$newfilename .= 'x' . $m[1];
+                            }
                             $autocopyDIR = (isset($item["path"]) ? $item["path"] : "../");
                             $autocopyURL = $item["upload_dir"] . "/" . $newfilename . ".jpg";
                             imagejpeg($im_dst, $autocopyDIR . $autocopyURL, 95);
