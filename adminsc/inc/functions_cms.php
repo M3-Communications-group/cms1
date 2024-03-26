@@ -3,6 +3,7 @@
 function make_menu($pid)
 {
     global $menu, $menu_html, $table, $admin_option;
+    //  OLD CODE
     //  if ($_SESSION['m3cms']["group_id"] == 0) {
     //     $myquery = "select *, '1' as perm_view, '1' as perm_add, '1' as perm_edit, '1' as perm_del from m3cms_sitemap where pid = '$pid' and show_inmenu = '1' order by showorder";
     // } else {
@@ -19,6 +20,7 @@ function make_menu($pid)
     //     }
     //     $menu_html[$row["level"]] .= '<li class="menu-item menu_lvl' . $row["level"] . $is_active . '"><a class="menu-link" href="' . $row["filename"] . '?admin_option=' . $row["id"] . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $row["name"] . '</a></li>';
     // }
+    //  END OLD
 
     if ($_SESSION['m3cms']["group_id"] == 0) {
         $myquery = "select * from  m3cms_sitemap where pid=0 order by pid"; //Select all the table
@@ -50,7 +52,7 @@ function make_menu($pid)
                     $myResult2 = query($myquery); //Run the Query
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
-                        $menu_html .=   '<li class="menu-item">
+                        $menu_html .=   '<li class="menu-item ms-3">
                                             <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
                                                 <span class="menu-text">' . $child['name'] . '</span>
                                             </a>
@@ -123,6 +125,7 @@ function locate_position($sitemap_id)
                     $_SESSION['m3cms']["perm_add"] = $row["perm_add"];
                     $_SESSION['m3cms']["perm_edit"] = $row["perm_edit"];
                     $_SESSION['m3cms']["perm_del"] = $row["perm_del"];
+                    
                 }
             }
         }
