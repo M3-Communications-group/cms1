@@ -15,17 +15,19 @@
         <script src="js/ckeditor/ckeditor.js"></script>
         -->
 
+    <!-- IMPLEMENTED BOOTSTRAP -->
     <link rel="stylesheet" href="css\app.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="css\bootstrap.min.css">
 
+
     <script src="js\app.min.js"></script>
     <script src="js\head.js"></script>
     <script src="js\vendor.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+    <!-- END BOOTSTRAP IMPLEMENTATION -->
 
     <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
 
@@ -93,6 +95,9 @@
     if (empty($_GET["hide_nav"])) {
     ?>
 
+
+        <div style="clear: both;"></div>
+        <br>
         <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
             <tr>
                 <td valign="top">
@@ -111,23 +116,24 @@
                                         <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
                                     </div>
 
+                                    <li class="menu-title">Main Menu</li>
 
                                     <ul class="menu">
-                                        <?php
-
-                                        // foreach ($menu_html as $menu_item) {
-                                        //     echo $menu_item;
-                                        // }
-
-                                        echo $menu_html;
-
-
-                                        ?>
-                                    </ul>
+                                    <?php
+                                    foreach ($menu_html as $menu_item) {
+                                    echo $menu_item;
+                                    }
+                                    ?>
                                 </ul>
 
-                                <!--- End Menu -->
-                                <div class="clearfix"></div>
+
+
+
+
+
+
+                                   <!--- End Menu -->
+                                    <div class="clearfix"></div>
                             </div>
                         </div>
 
@@ -250,6 +256,8 @@
 
                                         <!-- User Dropdown -->
                                         <li class="dropdown">
+
+
                                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                                 <img src="images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                                                 <span class="ms-3 d-none d-md-inline-block">
@@ -258,13 +266,13 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                                                 <!-- item-->
-                                                <div class="my-3">
-                                                    <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change password</a>
+                                                <div class="my-4">
+                                                    <a class="mx-2 fs-5 text" href="change_password.php?admin_option=1" style="color: #850208;">Change password</a>
 
                                                 </div>
                                                 <!-- item-->
-                                                <div class=" mt-4 mb-3">
-                                                    <a class="mx-2 fs-5 text-primary" href="index.php?logout" style="color: #850208;">Logout</a><br>
+                                                <div>
+                                                    <a class="mx-2 fs-5" href="index.php?logout" style="color: #850208;">Logout</a><br>
 
                                                 </div>
 
@@ -281,6 +289,11 @@
                                 </div>
                             </div>
                             <!-- ========== Topbar End ========== -->
+
+
+
+                            
+
 
                             <div class="content">
 
@@ -326,14 +339,17 @@
                                     }
 
                                     if ($show_more) {
-                                        echo '</td><td valign="top"> <div style="margin: 0px 0px 0px 20px;">' . '<h2>' . $pname . '</h2>' . (($show_viewadd) ? $menu_viewadd : '') . '<div class="clear"></div>';
+                                        echo '</td><td valign="top">
+                <div style="margin: 0px 0px 0px 20px;">'
+                                            . '<h2>' . $pname . '</h2>'
+                                            . (($show_viewadd) ? $menu_viewadd : '')
+                                            . '<div class="clear"></div>';
                                     }
                                 } else {
                                     echo $menu_viewadd;
                                 }
                                     ?>
                                     </div>
-
                                     <!-- end row -->
 
                                 </div> <!-- container -->
@@ -341,4 +357,138 @@
                             </div> <!-- content -->
                         </div>
                     </div>
+
+                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="main" name="main" action="/new1-statehouse.gov.sc_0/public/adminsc/main.php?admin_option=29&amp;action=add&amp;table=&amp;pid=0&amp;start=view&amp;" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;"><label>* Type</label><br><select class="form-control" name="type">
+                                            <option class="form-option" value="1" selected="">News</option>
+                                            <option class="form-option" value="2">Speeches</option>
+                                            <option class="form-option" value="3">Messages</option>
+                                        </select><br><label>Topic</label><br><select class="form-control" name="pid" id="pid">
+                                            <option class="form-option" value="0">Select...</option>
+                                            <option class="form-option" value="37">Blue Economy</option>
+                                            <option class="form-option" value="48">Cabinet Business</option>
+                                            <option class="form-option" value="27">Climate Change</option>
+                                            <option class="form-option" value="40">Commonwealth</option>
+                                            <option class="form-option" value="10">Community Development</option>
+                                            <option class="form-option" value="41">Condolences</option>
+                                            <option class="form-option" value="32">Culture</option>
+                                            <option class="form-option" value="2">Defence</option>
+                                            <option class="form-option" value="18">Education</option>
+                                            <option class="form-option" value="42">Employment</option>
+                                            <option class="form-option" value="29">Energy</option>
+                                            <option class="form-option" value="21">Enterpreneurship Development</option>
+                                            <option class="form-option" value="26">Environment</option>
+                                            <option class="form-option" value="23">Finance</option>
+                                            <option class="form-option" value="47">Fisheries</option>
+                                            <option class="form-option" value="19">Foreign Affairs</option>
+                                            <option class="form-option" value="46">Gender</option>
+                                            <option class="form-option" value="30">Health</option>
+                                            <option class="form-option" value="34">Housing</option>
+                                            <option class="form-option" value="6">Hydrocarbons</option>
+                                            <option class="form-option" value="14">Immigration</option>
+                                            <option class="form-option" value="8">Information Communications Technology</option>
+                                            <option class="form-option" value="25">Investment</option>
+                                            <option class="form-option" value="33">Land Use</option>
+                                            <option class="form-option" value="3">Legal Affairs</option>
+                                            <option class="form-option" value="20">Natural Resources</option>
+                                            <option class="form-option" value="12">Piracy</option>
+                                            <option class="form-option" value="45">Politics</option>
+                                            <option class="form-option" value="43">Public Administration</option>
+                                            <option class="form-option" value="13">Religion</option>
+                                            <option class="form-option" value="28">SIDS</option>
+                                            <option class="form-option" value="9">Social Affairs</option>
+                                            <option class="form-option" value="11">Sport</option>
+                                            <option class="form-option" value="1">State House</option>
+                                            <option class="form-option" value="31">Tourism</option>
+                                            <option class="form-option" value="17">Transport</option>
+                                            <option class="form-option" value="5">Youth</option>
+                                        </select><br><label>* Language</label><br><select class="form-control" name="language">
+                                            <option class="form-option" value="1" selected="">English</option>
+                                            <option class="form-option" value="2">French</option>
+                                            <option class="form-option" value="3">Creole</option>
+                                        </select><br><label>Date</label><br><input class="form-control" type="Text" name="date" value="2024-03-22"><br><label>* Title</label><br><input class="form-control" type="Text" name="title" value=""><br><label>Short title for slider (news only)</label><br><input class="form-control" type="Text" name="short_title" value=""><br><label>* Text</label><br>
+                                        <script type="text/javascript">
+                                            tinymce.init({
+                                                // General options
+                                                mode: "exact",
+                                                elements: "text",
+                                                gecko_spellcheck: true,
+                                                plugins: ["advlist autolink lists link image charmap print preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "insertdatetime media nonbreaking save table directionality paste"],
+                                                menubar: false,
+                                                relative_urls: true,
+                                                remove_script_host: false,
+                                                document_base_url: "",
+                                                entity_encoding: "raw",
+                                                image_advtab: true,
+                                                resize: "both",
+                                                // contextmenu: "link image inserttable | cell row column deletetable",
+
+                                                paste_use_dialog: true,
+                                                paste_auto_cleanup_on_paste: true,
+                                                paste_convert_headers_to_strong: false,
+                                                paste_strip_class_attributes: "all",
+                                                paste_remove_spans: true,
+                                                paste_remove_styles: true,
+
+                                                // Theme options
+                                                toolbar1: "pastetext | styleselect |  bold italic underline sub sup | link unlink anchor | image media | alignleft aligncenter alignright | bullist numlist | table | removeformat code",
+                                                toolbar2: "",
+
+                                                content_css: "css/rte.css" // resolved to http://domain.mine/mycontent.css
+                                            });
+                                        </script>
+
+
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+
+                                        <div style="clear: both;"></div>
+                                        <label>Photo (news only) - min size 720x458</label><br><input class="form-control" type="File" name="photo_big_homepage"><br><label>* Show on homepage slider</label><br><select class="form-control" name="home_page_show">
+                                            <option class="form-option" value="0" selected="">No</option>
+                                            <option class="form-option" value="1">Yes</option>
+                                        </select><br><label>* Active</label><br><select class="form-control" name="active">
+                                            <option class="form-option" value="0">No</option>
+                                            <option class="form-option" value="1" selected="">Yes</option>
+                                        </select><br>
+                                        <script language="JavaScript">
+                                            function content_doonsubmit(mmmyform) {
+
+
+                                                mmmyform.submit();
+                                            }
+                                        </script> <!-- <input class="btn btn-primary" type="Submit" value="Save" id="submit"> -->
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Send Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
+                 
+
+
+                    <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div><script>document.write(new Date().getFullYear())</script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>

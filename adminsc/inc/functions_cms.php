@@ -3,68 +3,21 @@
 function make_menu($pid)
 {
     global $menu, $menu_html, $table, $admin_option;
-    //  OLD CODE
-    //  if ($_SESSION['m3cms']["group_id"] == 0) {
-    //     $myquery = "select *, '1' as perm_view, '1' as perm_add, '1' as perm_edit, '1' as perm_del from m3cms_sitemap where pid = '$pid' and show_inmenu = '1' order by showorder";
-    // } else {
-    //     $myquery = "select m3cms_sitemap.*, m3cms_access.perm_view, m3cms_access.perm_add, m3cms_access.perm_edit, m3cms_access.perm_del from m3cms_sitemap left join m3cms_access on m3cms_sitemap.id = m3cms_access.sitemap_id where m3cms_access.group_id = '" . $_SESSION['m3cms']["group_id"] . "' and pid = '$pid' and perm_view in ('1', '2') and show_inmenu = '1' order by showorder";
-    // }
-    // $MyResult = query($myquery);
-    // while ($row = mysqli_fetch_array($MyResult)) {
-    //     $is_active = "";
-    //     if ($row["id"] == $menu[$row["level"]]) {
-    //         $is_active = "_active";
-    //         if ($row["has_children"]) {
-    //             make_menu($row["id"]);
-    //         }
-    //     }
-    //     $menu_html[$row["level"]] .= '<li class="menu-item menu_lvl' . $row["level"] . $is_active . '"><a class="menu-link" href="' . $row["filename"] . '?admin_option=' . $row["id"] . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $row["name"] . '</a></li>';
-    // }
-    //  END OLD
-
     if ($_SESSION['m3cms']["group_id"] == 0) {
-        $myquery = "select * from  m3cms_sitemap where pid=0 order by pid"; //Select all the table
-        $myResult = query($myquery); //Run the Query
-
-        $menu_html = ""; //Inicialize the global  variable to empty
-        $menu_html .= '<li class="menu-title">Main menu</li>';
-
-        while ($row = mysqli_fetch_array($myResult)) {
-            if ($row['has_children'] == 0 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
-                $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '">';
-                $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
-                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
-                $menu_html .=    '</a>';
-            } else if ($row['has_children'] == 1 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
-                $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
-                $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
-                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
-                $menu_html .=    '</a>';
-
-                if ($row['has_children'] == 1) { //Lets create the sub menus
-                    $menu_html .= '<div class="collapse" id="menu' . $row['id'] . '">';
-                    $menu_html .=   '<ul class="sub-menu">';
-
-                    $myquery = 'select * from  m3cms_sitemap where pid>0 and pid=' . $row['id'] . ' order by pid'; //Select all the children of the current parent
-                    $myResult2 = query($myquery); //Run the Query
-                    while ($child = mysqli_fetch_array($myResult2)) {
-                        // Generate HTML for each child menu item
-                        $menu_html .=   '<li class="menu-item ms-3">
-                                            <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
-                                                <span class="menu-text">' . $child['name'] . '</span>
-                                            </a>
-                                        </li>';
-                    }
-                    $menu_html .=   '</ul>'; // Close sub-menu ul
-                    $menu_html .= '</div>'; // Close collapse div
-                }
-
-                $menu_html .= '</li>'; // Close menu-item li
-
+        $myquery = "select *, '1' as perm_view, '1' as perm_add, '1' as perm_edit, '1' as perm_del from m3cms_sitemap where pid = '$pid' and show_inmenu = '1' order by showorder";
+    } else {
+        $myquery = "select m3cms_sitemap.*, m3cms_access.perm_view, m3cms_access.perm_add, m3cms_access.perm_edit, m3cms_access.perm_del from m3cms_sitemap left join m3cms_access on m3cms_sitemap.id = m3cms_access.sitemap_id where m3cms_access.group_id = '" . $_SESSION['m3cms']["group_id"] . "' and pid = '$pid' and perm_view in ('1', '2') and show_inmenu = '1' order by showorder";
+    }
+    $MyResult = query($myquery);
+    while ($row = mysqli_fetch_array($MyResult)) {
+        $is_active = "";
+        if ($row["id"] == $menu[$row["level"]]) {
+            $is_active = "_active";
+            if ($row["has_children"]) {
+                make_menu($row["id"]);
             }
         }
+        $menu_html[$row["level"]] .= '<div class="menu-text menu_lvl' . $row["level"] . $is_active . '"><a href="' . $row["filename"] . '?admin_option=' . $row["id"] . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $row["name"] . '</a></div>';
     }
 }
 
@@ -113,10 +66,9 @@ function locate_position($sitemap_id)
                 }
 
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
+                    $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'view') ? "_active" : "") . '"><a href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=view&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["list"] . '</a></div>';
                     if ($row["perm_add"] > 0) {
                         $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
-
-                        
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
@@ -493,6 +445,7 @@ function showordermove($id, $table, $move, $showorderfield = 'showorder')
 
 function delid($id, $table)
 {
+    
 }
 
 function make_form_item($item, $values)
@@ -858,7 +811,7 @@ function make_form_item($item, $values)
             $retval .= '</select><br>';
             break;
         case "image":
-            //			echo $values[$item["name"]];
+//			echo $values[$item["name"]];
             if (!empty($values[$item["name"]])) {
                 $img_path = $values[$item["name"]];
                 //if($item["name"] == 'photo_orig' and file_exists('../' . $values["photo_big"])) {
@@ -868,7 +821,7 @@ function make_form_item($item, $values)
             }
             $retval .= '<input type="File" name="' . $item["name"] . '">';
             if (!empty($values[$item["name"]])) {
-                //				$retval .= $values[$item["name"]];
+//				$retval .= $values[$item["name"]];
             }
             $retval .= '<br>';
             break;
@@ -891,8 +844,7 @@ function make_form_item($item, $values)
             $retval .= '</div>';
             break;
 
-        default:
-            break;
+        default: break;
     }
 
     return $retval;
@@ -1008,7 +960,7 @@ function commit($fields_to_manage, $table)
                 foreach ($_POST[$item["name"]] as $tmp1 => $tmp2) {
                     $tmp3 .= $tmp2 . "|";
                 }
-                //				$tmp3 = substr($tmp3, 0, -1);
+//				$tmp3 = substr($tmp3, 0, -1);
                 if (!empty($tmp3)) {
                     $tmp3 = "|" . $tmp3;
                 }
@@ -1087,7 +1039,7 @@ function commit($fields_to_manage, $table)
                 }
 
                 if ($item["type"] == 'image') {
-                    if (!empty($item["check_width"]) or !empty($item["check_height"]) or !empty($item["check_maxwidth"]) or !empty($item["check_minwidth"]) or !empty($item["check_maxheight"]) or !empty($item["check_propotion"])) {
+                    if (!empty($item["check_width"]) or ! empty($item["check_height"]) or ! empty($item["check_maxwidth"]) or ! empty($item["check_minwidth"]) or ! empty($item["check_maxheight"]) or ! empty($item["check_propotion"])) {
                         $img_size = getimagesize($_FILES[$item["name"]]["tmp_name"]);
                         if (!empty($item["check_width"]) && $img_size[0] <> $item["check_width"]) {
                             $err .= '' . $admin_texts[$lang]["width_of"] . ' ' . $item["title"] . '(' . $_FILES[$item["name"]]["name"] . ') ' . $admin_texts[$lang]["has_to"] . ' ' . $item["check_width"] . 'px, ' . $admin_texts[$lang]["not"] . ' ' . $img_size[0] . 'px.<br>';
@@ -1154,7 +1106,7 @@ function commit($fields_to_manage, $table)
 
 
     if (!empty($err)) {
-        return (array(false, $err));
+        return(array(false, $err));
     }
 
     if (!empty($myquery)) {
@@ -1273,7 +1225,7 @@ function commit($fields_to_manage, $table)
                 $tmp_res = copy($_FILES[$item["name"]]["tmp_name"], $copyDIR . $copyURL);
                 if (!$tmp_res) {
                     $err .= 'Cannot copy file ' . $item["title"] . '(' . $_FILES[$item["name"]]["name"] . ') into ' . $copyURL . '. Please call webmaster.<br>';
-                    return (array(false, $err));
+                    return(array(false, $err));
                 } else {
                     $my3query = "update `$table` set `" . $item["name"] . "` = '" . $copyURL . "'";
                     if ($item["type"] == 'image' && !empty($item["writesize"])) {
@@ -1336,7 +1288,7 @@ function commit($fields_to_manage, $table)
                             $new_width = round($img_src_size[0] * ($img_params[2] / $img_src_size[1]));
                         } else {
                             $err .= 'Invalid parameters: no width defined for auto image ' . $item["title"] . ' - ' . $not_important . '(' . $_FILES[$item["name"]]["name"] . '). Please call webmaster.<br>';
-                            return (array(false, $err));
+                            return(array(false, $err));
                         }
                         // height
                         if (!empty($img_params[2])) {
@@ -1347,7 +1299,7 @@ function commit($fields_to_manage, $table)
                             $new_height = round($img_src_size[1] * ($img_params[1] / $img_src_size[0]));
                         } else {
                             $err .= 'Invalid parameters: no height defined for auto image ' . $item["title"] . ' - ' . $not_important . '(' . $_FILES[$item["name"]]["name"] . '). Please call webmaster.<br>';
-                            return (array(false, $err));
+                            return(array(false, $err));
                         }
                         if (empty($img_params[5]) || (!empty($img_params[5]) && $new_width <= $img_src_size[0] && $new_height <= $img_src_size[1])) { // if not optional || optional and new_width <= orig_width and new_height <= orig_height
                             $im_dst = imagecreatetruecolor($new_width, $new_height);
@@ -1436,7 +1388,7 @@ function commit($fields_to_manage, $table)
                                 $newfilename .= '_' . $m[0];
                             }
                             if (preg_match('/[0-9]+/', $img_params[1], $m)) {
-                                @$newfilename .= 'x' . $m[1];
+                                $newfilename .= 'x' . $m[1];
                             }
                             $autocopyDIR = (isset($item["path"]) ? $item["path"] : "../");
                             $autocopyURL = $item["upload_dir"] . "/" . $newfilename . ".jpg";
@@ -1480,9 +1432,9 @@ function commit($fields_to_manage, $table)
         }
     }
     if (empty($err)) {
-        return (array(true, $id));
+        return(array(true, $id));
     } else {
-        return (array(false, $err));
+        return(array(false, $err));
     }
 }
 
@@ -1502,7 +1454,7 @@ function content_fix_lvl_chld($table, $pid, $level)
         $myquery .= ", has_children = '1' ";
     }
     $myquery .= " where id = '$pid'";
-    //	echo $myquery . "<br>";
+//	echo $myquery . "<br>";
     query($myquery);
     while ($row = mysqli_fetch_array($MyResult)) {
         content_fix_lvl_chld($table, $row["id"], $level + 1);
@@ -1537,9 +1489,9 @@ function fixShoworderById($table, $id = null)
     if (check_field_exists($table, "showorder")) {
         if (check_field_exists($table, "pid")) {
             $myquery = "SELECT id, showorder "
-                . "FROM `$table` "
-                . "WHERE pid = (SELECT pid FROM `$table` WHERE id='" . mysqli_real_escape_string($sqlConn, $id) . "') "
-                . "ORDER BY showorder ASC, id DEC";
+                    . "FROM `$table` "
+                    . "WHERE pid = (SELECT pid FROM `$table` WHERE id='" . mysqli_real_escape_string($sqlConn, $id) . "') "
+                    . "ORDER BY showorder ASC, id DEC";
         } else {
             $myquery = "select * from `$table` order by showorder, id";
         }
@@ -1586,7 +1538,7 @@ function dbselect_tree_options($myquery, $item, $values, $sub_pid, $pid, &$tmp)
             $retval .= dbselect_tree_options($myquery, $item, $values, $sub_pid, $pid, $tmp);
         }
     }
-    return ($retval);
+    return($retval);
 }
 
 function write_fcontent($key, $fcontent, $ext = "html")
@@ -1599,6 +1551,7 @@ function write_fcontent($key, $fcontent, $ext = "html")
 
 function generate_static_html()
 {
+    
 }
 
 function update_related($article_id)
@@ -1624,7 +1577,7 @@ function check_user_permission($category_id, $type)
     $myquery = "select * from m3cms_access left join m3cms_sitemap on m3cms_access.sitemap_id = m3cms_sitemap.id where m3cms_access.group_id = '" . $_SESSION['m3cms']["group_id"] . "' and m3cms_sitemap.id = '$category_id'";
     $MyResult = query($myquery);
     while ($row = mysqli_fetch_array($MyResult)) {
-        return ($row[$type]);
+        return($row[$type]);
     }
 
     return 0;
