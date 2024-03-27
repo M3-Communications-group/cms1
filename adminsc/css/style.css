@@ -1,7 +1,6 @@
 body {
     margin: 0px;
     padding: 0px;
-    padding: 10px;
     background-color: #FFFFFF;
 }
 
@@ -119,7 +118,6 @@ h1 {
 
 h1.user {
     font-weight: normal;
-    padding-bottom: 0px;
     padding-bottom: 10px;
     color: #333132;
 }
@@ -169,7 +167,6 @@ div.menu_lvl0 {
     text-transform: uppercase;
     background-color: #850208;
     color: #ffffff;
-    padding: 10px 15px 8px 13px; /*Dont touch it if u dont want to lose the structure of the left menu */
     padding: 10px 15px 8px 13px;
     float: left;
     border-right: 2px solid #FFFFFF;
@@ -185,7 +182,6 @@ div.menu_lvl0_active {
     text-transform: uppercase;
     background-color: #530105;
     color: #333132;
-    padding: 10px 15px 8px 13px; /* Dont touch this one*/
     padding: 10px 15px 8px 13px;
     float: left;
     border-right: 2px solid #FFFFFF;
@@ -202,7 +198,6 @@ div.menu_lvl1 {
     text-transform: none;
     background-color: #530105;
     color: #ffffff;
-    padding: 0px;
     padding: 10px 15px 8px 13px;
     float: left;
     border-right: 1px solid #FFFFFF;
@@ -219,7 +214,6 @@ div.menu_lvl1_active {
     text-transform: none;
     background-color: #530105;
     color: #333132;
-    padding: 0px;
     padding: 10px 15px 8px 13px;
     float: left;
     border-right: 1px solid #FFFFFF;
@@ -234,7 +228,6 @@ div.menu_lvl1_active a {
 }
 
 div.menu_lvl_viewadd {
-    margin: 0px;
     margin: 0px 10px 10px 0px;
     font-size: 11px;
     color: #333132;
