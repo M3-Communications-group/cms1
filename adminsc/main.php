@@ -4,7 +4,7 @@ require("inc/head.php");
 
 
 
-if (isset($commit_result)) {
+if (isset($commit_result) && $_SERVER["REQUEST_METHOD"] == "POST") {
     if ($commit_result[0]) {
         //gen_google_sitemap();
         if (function_exists($table . "_additional")) {
@@ -12,7 +12,10 @@ if (isset($commit_result)) {
         }
         echo '<div class="success">' . $admin_texts[$lang]["success"] . '</div>';
     } else {
-        echo '<div class="err">' . $commit_result[1] . '</div>';
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            echo '<div class="err">' . $commit_result[1] . '</div>';
+        }
+        
     }
 }
 
