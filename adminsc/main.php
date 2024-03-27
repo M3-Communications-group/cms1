@@ -12,7 +12,7 @@ if (isset($commit_result)) {
         }
         echo '<div class="success">' . $admin_texts[$lang]["success"] . '</div>';
     } else {
-        echo '<div class="err">' . $commit_result[1] . '</div>';
+        // echo '<div class="err">' . $commit_result[1] . '</div>';
     }
 }
 
