@@ -1,5 +1,10 @@
 <?php
 
+// Desactivar los mensajes de aviso (notices)
+error_reporting(E_ALL & ~E_NOTICE);
+
+// Tu código PHP aquí
+
 function make_menu($pid)
 {
     global $menu, $menu_html, $table, $admin_option;
@@ -51,14 +56,14 @@ function make_menu($pid)
                     $myResult2 = query($myquery); //Run the Query
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
-                        $menu_html .=   '<li class="menu-item ms-3">
+                        $menu_html .=   '<li class="menu-item ms-0">
                                             <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
                                                 <span class="menu-text">' . $child['name'] . '</span>
-                                            </a>
+                                            </a>    
                                         </li>';
                     }
                     $menu_html .=   '</ul>'; // Close sub-menu ul
-                    $menu_html .= '</div>'; // Close collapse div
+                    $menu_html .= '</div">'; // Close collapse div
                 }
 
                 $menu_html .= '</li>'; // Close menu-item li
@@ -1683,3 +1688,17 @@ function getRandomString($lenght = NULL, $api = FALSE)
     }
     return $string;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

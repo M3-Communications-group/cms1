@@ -4359,7 +4359,7 @@ fieldset:disabled .btn {
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:728px) {
     .dropdown-menu-md-start {
         --bs-position: start
     }
