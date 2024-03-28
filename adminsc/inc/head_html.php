@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 
 
     <link rel="stylesheet" href="css\app.min.css">
@@ -137,7 +138,7 @@
                                         <div class="logo-box">
                                             <!-- Brand Logo Light -->
                                             <a href="index.html" class="logo-light">
-                                                <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg">
+                                                <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg">
                                                 <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
                                             </a>
 
@@ -352,4 +353,5 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </footer>
