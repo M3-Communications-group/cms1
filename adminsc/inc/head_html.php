@@ -2,7 +2,7 @@
     <title>Admin Tool</title>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css?version=2" />
-    <link rel="icon" type="image/x-icon" href="images\statehouse_crest.jpg">
+    <link rel="icon" type="image/x-icon" href="images\statehouse_crest-removebg-preview.png">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
-    
+
 
     <link rel="stylesheet" href="css\app.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -99,24 +99,27 @@
                                 <ul class="menu">
                                     <!-- Brand Logo -->
                                     <div class="logo-box mt-4 mb-5">
-                                    <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
-                                </div>
-                                <!--- Menu -->
-                                <ul class="menu scrollbar" style="max-height: 67dvh; overflow-x: hidden;">
+                                        <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
+                                    </div>
+                                    <!--- Menu -->
+                                    <ul class="menu scrollbar" style="max-height: 67dvh; overflow-x: hidden;">
 
 
 
-                                    <ul class="menu">
-                                        <?php
-                                        echo $menu_html;
+                                        <ul class="menu">
+                                            <?php
+                                            echo $menu_html;
 
 
-                                        ?>
+                                            ?>
+                                            <style>
+                                                
+                                            </style>
+                                        </ul>
                                     </ul>
-                                </ul>
 
-                                <!--- End Menu -->
-                                <div class="clearfix"></div>
+                                    <!--- End Menu -->
+                                    <div class="clearfix"></div>
                             </div>
                         </div>
 
@@ -128,20 +131,20 @@
                             <!-- ========== Topbar Start ========== -->
                             <div class="navbar-custom">
                                 <div class="topbar">
-                                    <div class="topbar-menu d-flex align-items-center gap-1">
+                                    <div class="topbar-menu d-flex align-items-center  gap-1">
 
                                         <!-- Topbar Brand Logo -->
                                         <div class="logo-box">
                                             <!-- Brand Logo Light -->
                                             <a href="index.html" class="logo-light">
-                                                <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg">
-                                                <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
+                                                <img src="images/statehouse_crest-removebg-preview.png" alt="logo" class="logo-lg">
+                                                <img src="images/statehouse_crest-removebg-preview.png" alt="small logo" class="logo-sm">
                                             </a>
 
                                             <!-- Brand Logo Dark -->
                                             <a href="main.php" class="logo-dark">
-                                                <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg">
-                                                <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
+                                                <img src="images/statehouse_crest-removebg-preview.png" alt="dark logo" class="logo-lg">
+                                                <img src="images/statehouse_crest-removebg-preview.png" class="logo-sm">
                                             </a>
                                         </div>
 
@@ -242,7 +245,9 @@
                                             <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                                 <img src="images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                                                 <span class="ms-3 d-none d-md-inline-block">
-                                                    <h1 class="user"><?php echo $_SESSION['m3cms']["name"] ?></h1> <i class="mdi mdi-chevron-down"></i>
+                                                    <h1 class="user"><?php echo $_SESSION['m3cms']["name"] ?><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+  <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
+</svg> </h1>
                                                 </span>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -329,21 +334,24 @@
 
                             </div> <!-- content -->
                         </div>
-                    </div>  
+                    </div>
                     <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div><script>document.write(new Date().getFullYear())</script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
-                                    <a href="javascript: void(0);">About</a>
-                                    <a href="javascript: void(0);">Support</a>
-                                    <a href="javascript: void(0);">Contact Us</a>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>
+                                        <script>
+                                            document.write(new Date().getFullYear())
+                                        </script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                        <a href="javascript: void(0);">About</a>
+                                        <a href="javascript: void(0);">Support</a>
+                                        <a href="javascript: void(0);">Contact Us</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </footer>
-                    
+                    </footer>

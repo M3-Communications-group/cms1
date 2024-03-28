@@ -39,14 +39,14 @@ function make_menu($pid)
             if ($row['has_children'] == 0 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
                 $menu_html .=    '<a class="menu-link menu_lvl0" style="padding-left:1px" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '">';
-                $menu_html .=        '<span class="menu-icon"><i class="bi bi-globe-americas"></i></span>';
+                $menu_html .=        '<span class="menu-icon"><img src = "images/icons/' . $row['name'] . '.svg" alt=""/></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
             } else if ($row['has_children'] == 1 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
                 $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" style="padding-left:1px" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
-                $menu_html .=        '<span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>';
-                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>' ;
+                $menu_html .=        '<span class="menu-icon"><img src = "images/icons/' . $row['name'] . '.svg" alt=""/></span>';
+                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
                 <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
               </svg>';
@@ -55,23 +55,42 @@ function make_menu($pid)
 
                 $menu_html .=    '</a>';
 
-                if ($row['has_children'] == 1) { //Lets create the sub menus
+                if ($row['has_children'] == 1) { // Lets create the sub menus
                     $menu_html .= '<div class="collapse" id="menu' . $row['id'] . '">';
-                    $menu_html .=   '<ul class="sub-menu">';
-
-                    $myquery = 'select * from  m3cms_sitemap where pid>0 and pid=' . $row['id'] . ' order by pid'; //Select all the children of the current parent
-                    $myResult2 = query($myquery); //Run the Query
+                    $menu_html .=    '<ul class="sub-menu">';
+                
+                    $myquery = 'select * from m3cms_sitemap where pid>0 and pid=' . $row['id'] . ' order by pid'; // Select all the children of the current parent
+                    $myResult2 = query($myquery); // Run the Query
+                
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
-                        $menu_html .=   '<li class="menu-item ms-0">
-                                            <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
-                                                <span class="menu-text" style="padding-left:15px">' . $child['name'] . '</span>
-                                                
-                                            </a>    
-                                        </li>';
+                        $menu_html .= '<li class="menu-item ms-0">';
+                        $menu_html .=    '<a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">';
+                
+                        if (strlen($child['name']) > 20) {
+                            $menu_html .= '<span class="menu-text" style="padding-left:15px">';
+                            $words = explode(" ", $child['name']);
+                            $line_length = 0;
+                            foreach ($words as $word) {
+                                // Verifica si agregar la palabra excederá el límite de longitud por línea
+                                if ($line_length + strlen($word) > 20) {
+                                    $menu_html .= '<br>';
+                                    $line_length = 0; // Reinicia la longitud de la línea
+                                }
+                                $menu_html .= $word . ' '; // Agrega la palabra actual
+                                $line_length += strlen($word) + 1; // Añade la longitud de la palabra y un espacio
+                            }
+                            $menu_html .= '</span>';
+                        } else {
+                            $menu_html .= '<span class="menu-text" style="padding-left:15px">' . $child['name'] . '</span>';
+                        }
+                
+                        $menu_html .= '</a>';
+                        $menu_html .= '</li>';
                     }
-                    $menu_html .=   '</ul>'; // Close sub-menu ul
-                    $menu_html .= '</div">'; // Close collapse div
+                
+                    $menu_html .= '</ul>'; // Close sub-menu ul
+                    $menu_html .= '</div>'; // Close collapse div
                 }
 
                 $menu_html .= '</li>'; // Close menu-item li
@@ -128,8 +147,6 @@ function locate_position($sitemap_id)
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
                         $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
-
-                        
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
@@ -1696,17 +1713,3 @@ function getRandomString($lenght = NULL, $api = FALSE)
     }
     return $string;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
