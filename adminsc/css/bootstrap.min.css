@@ -98,7 +98,7 @@
     --ct-tertiary-bg-rgb: 233, 236, 239;
     --ct-body-bg: #f5f6f8;
     --ct-body-bg-rgb: 245, 246, 248;
-    --ct-heading-color: #343a40;
+    --ct-heading-color: #ffffff;
     --ct-link-color: #6658dd;
     --ct-link-color-rgb: 102, 88, 221;
     --ct-link-decoration: none;
@@ -233,7 +233,7 @@ h6 {
     font-family: "Cerebri Sans,sans-serif";
     font-weight: 500;
     line-height: 1.1;
-    color: var(--ct-heading-color, inherit)
+    color: black;
 }
 
 .h1,

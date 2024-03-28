@@ -126,7 +126,7 @@ html[data-two-column-color=gradient] {
 }
 
 html[data-topbar-color=light] {
-    --ct-topbar-bg: #fff;
+    --ct-topbar-bg: #38414a;
     --ct-topbar-item-color: #6c757d;
     --ct-topbar-item-hover-color: #6658dd;
     --ct-topbar-search-bg: #f8f8f8
@@ -235,6 +235,7 @@ html[data-topbar-color=brand] {
     align-items: center;
     height: var(--ct-topbar-height);
     cursor: pointer
+    
 }
 
 .navbar-custom .topbar .nav-link:hover {

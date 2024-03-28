@@ -102,7 +102,6 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
         $menu_html .= '</li>';
     };
 
-
     $exclude_vars = array('delID', 'showordermove', 'showorderfield', 'active_new_status', 'active_field');
     $exclude_vars2 = array('delID', 'showordermove', 'showorderfield', 'active_new_status', 'active_field', 'start');
 
