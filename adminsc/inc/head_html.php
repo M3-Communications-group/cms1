@@ -1,7 +1,3 @@
-<!DOCTYPE HTML>
-
-<html>
-
 <head>
     <title>Admin Tool</title>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -10,10 +6,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
 
     <link rel="stylesheet" href="css\app.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -80,9 +77,7 @@
         }
     </script>
 
-
 </head>
-
 
 <body class="p-0">
     <?php
@@ -97,33 +92,34 @@
 
                         <!-- menu-left -->
                         <div class="app-menu">
-                            <div class="py-3" style="margin-left: -19px;">
+                            <div class="scrollbar py-3  ">
 
-                                <!-- Brand Logo -->
-                                <div class="logo-box mt-4 mb-5">
-                                    <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
-                                </div>
+
                                 <!--- Menu -->
-                                <ul class="menu scrollbar" style="max-height: 75dvh; overflow-x: hidden;">
+                                <ul class="menu">
+                                    <!-- Brand Logo -->
+                                    <div class="logo-box mt-4 mb-5">
+                                        <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
+                                    </div>
+                                    <!--- Menu -->
+                                    <ul class="menu scrollbar" style="max-height: 67dvh; overflow-x: hidden;">
 
 
 
-                                    <ul class="menu">
-                                        <?php
-
-                                        // foreach ($menu_html as $menu_item) {
-                                        //     echo $menu_item;
-                                        // }
-
-                                        echo $menu_html;
+                                        <ul class="menu">
+                                            <?php
+                                            echo $menu_html;
 
 
-                                        ?>
+                                            ?>
+                                            <style>
+                                                
+                                            </style>
+                                        </ul>
                                     </ul>
-                                </ul>
 
-                                <!--- End Menu -->
-                                <div class="clearfix"></div>
+                                    <!--- End Menu -->
+                                    <div class="clearfix"></div>
                             </div>
                         </div>
 
@@ -357,18 +353,3 @@
                             </div>
                         </div>
                     </footer>
-                    <script>
-                        $(document).ready(function() {
-                            $('.menu-parent > .menu-link').click(function() {
-                                var $submenu = $(this).siblings('.collapse');
-                                if ($submenu.length) {
-                                    if ($submenu.hasClass('show')) {
-                                        $submenu.removeClass('show');
-                                    } else {
-                                        $('.collapse.show').removeClass('show');
-                                        $submenu.addClass('show');
-                                    }
-                                }
-                            });
-                        });
-                    </script>
