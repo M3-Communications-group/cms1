@@ -1,5 +1,10 @@
 <?php
 
+// Desactivar los mensajes de aviso (notices)
+error_reporting(E_ALL & ~E_NOTICE);
+
+// Tu código PHP aquí
+
 function make_menu($pid)
 {
     global $menu, $menu_html, $table, $admin_option;
@@ -38,9 +43,10 @@ function make_menu($pid)
                 $menu_html .=    '</a>';
             } else if ($row['has_children'] == 1 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
+                $menu_html .=    '<a class="menu-link" data-bs-toggle="collapse" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
                 $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
+                $menu_html .= '<span class="menu-arrow"></span>';
                 $menu_html .=    '</a>';
 
                 if ($row['has_children'] == 1) { //Lets create the sub menus
@@ -51,14 +57,14 @@ function make_menu($pid)
                     $myResult2 = query($myquery); //Run the Query
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
-                        $menu_html .=   '<li class="menu-item ms-3">
+                        $menu_html .=   '<li class="menu-item ms-0">
                                             <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
-                                                <span class="menu-text">' . $child['name'] . '</span>
-                                            </a>
+                                                <span class="menu-text ms-1">' . $child['name'] . '</span>
+                                            </a>    
                                         </li>';
                     }
                     $menu_html .=   '</ul>'; // Close sub-menu ul
-                    $menu_html .= '</div>'; // Close collapse div
+                    $menu_html .= '</div">'; // Close collapse div
                 }
 
                 $menu_html .= '</li>'; // Close menu-item li
@@ -115,8 +121,6 @@ function locate_position($sitemap_id)
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
                         $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
-
-                        
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
@@ -946,7 +950,7 @@ function commit($fields_to_manage, $table)
             }
             switch ($item["check_type"]) {
                 case "text_nohtml":
-                    if (preg_match("/(<\/?)(\w+)([^>]*>)/", @$_POST[$item["name"]])) {
+                    if (preg_match("/(<\/?)(\w+)([^>]*>)/", $_POST[$item["name"]])) {
                         $err .= "" . $admin_texts[$lang]["is_invalid"] . " " . $item["title"] . "<br>";
                     }
                     break;
@@ -1002,7 +1006,7 @@ function commit($fields_to_manage, $table)
                 }
             }
 
-            if (@is_array($_POST[$item["name"]])) {
+            if (is_array($_POST[$item["name"]])) {
 
                 $tmp3 = '';
                 foreach ($_POST[$item["name"]] as $tmp1 => $tmp2) {
@@ -1036,7 +1040,7 @@ function commit($fields_to_manage, $table)
                         $myquery_exec_later[$item["external_table"]] .= ", `" . $item["name"] . "` = '" . $_POST[$item["name"]] . "'";
                     }
                 } else {
-                    @$myquery .= "`" . $item["name"] . "` = " . (($_POST[$item["name"]] === 'NULL') ? "NULL" : "'" . $_POST[$item["name"]] . "'") . ", ";
+                    $myquery .= "`" . $item["name"] . "` = " . (($_POST[$item["name"]] === 'NULL') ? "NULL" : "'" . $_POST[$item["name"]] . "'") . ", ";
                 }
             }
         } elseif ($item["type"] == 'auto') {
@@ -1124,7 +1128,7 @@ function commit($fields_to_manage, $table)
                 $myquery1 = "select max(showorder) from `$table` ";
                 //if(in_array('level', $auto)) {
                 if (check_field_exists($table, 'pid')) {
-                    @$myquery1 .= " where pid = '" . $_POST["pid"] . "'";
+                    $myquery1 .= " where pid = '" . $_POST["pid"] . "'";
                 }
                 $MyResult1 = query($myquery1);
                 $row1 = mysqli_fetch_row($MyResult1);

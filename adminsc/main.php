@@ -66,6 +66,7 @@ if ($action == 'view') {
 
             <?php
 
+
             echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
             echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
 			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
@@ -104,6 +105,7 @@ if ($action == 'view') {
                 . '
                         mmmyform.submit();
                     } 
+                    
 		</script>';
         echo '
         <script>
