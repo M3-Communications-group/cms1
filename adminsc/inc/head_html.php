@@ -1,35 +1,25 @@
-<!DOCTYPE HTML>
-
-<html>
-
 <head>
     <title>Admin Tool</title>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css?version=2" />
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/jquery-migrate-1.2.1.min.js"></script>
     <link rel="icon" type="image/x-icon" href="images\statehouse_crest.jpg">
-    <!-- <script language="JavaScript" src="../js/ajax.js"></script> -->
-    <!--
-        <script type="text/javascript" src="inc/tiny_mce/tiny_mce.js"></script>
-        <script src="js/ckeditor/ckeditor.js"></script>
-        -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    
 
     <link rel="stylesheet" href="css\app.min.css">
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="css\bootstrap.min.css">
-
     <script src="js\app.min.js"></script>
     <script src="js\head.js"></script>
     <script src="js\vendor.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-
     <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
-
-
     <script language="JavaScript">
         function del(delurl) {
             if (confirm('Do You really want to delete this record?')) {
@@ -86,6 +76,7 @@
             }
         }
     </script>
+
 </head>
 
 <body class="p-0">
@@ -107,18 +98,16 @@
                                 <!--- Menu -->
                                 <ul class="menu">
                                     <!-- Brand Logo -->
-                                    <div class="logo-box mb-5">
-                                        <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
-                                    </div>
+                                    <div class="logo-box mt-4 mb-5">
+                                    <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
+                                </div>
+                                <!--- Menu -->
+                                <ul class="menu scrollbar" style="max-height: 67dvh; overflow-x: hidden;">
+
 
 
                                     <ul class="menu">
                                         <?php
-
-                                        // foreach ($menu_html as $menu_item) {
-                                        //     echo $menu_item;
-                                        // }
-
                                         echo $menu_html;
 
 

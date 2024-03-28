@@ -1,3 +1,4 @@
+
 <?php
 
 // Desactivar los mensajes de aviso (notices)
@@ -37,15 +38,21 @@ function make_menu($pid)
         while ($row = mysqli_fetch_array($myResult)) {
             if ($row['has_children'] == 0 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '">';
-                $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
+                $menu_html .=    '<a class="menu-link menu_lvl0" style="padding-left:1px" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '">';
+                $menu_html .=        '<span class="menu-icon"><i class="bi bi-globe-americas"></i></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
             } else if ($row['has_children'] == 1 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
-                $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
-                $menu_html .=        '<span class="menu-icon"><i data-feather="airplay"></i></span>';
-                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
+                $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" style="padding-left:1px" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
+                $menu_html .=        '<span class="menu-icon"><i class="bi bi-file-earmark-text"></i></span>';
+                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>' ;
+                $menu_html .=  '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
+              </svg>';
+
+
+
                 $menu_html .=    '</a>';
 
                 if ($row['has_children'] == 1) { //Lets create the sub menus
@@ -58,7 +65,8 @@ function make_menu($pid)
                         // Generate HTML for each child menu item
                         $menu_html .=   '<li class="menu-item ms-0">
                                             <a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">
-                                                <span class="menu-text">' . $child['name'] . '</span>
+                                                <span class="menu-text" style="padding-left:15px">' . $child['name'] . '</span>
+                                                
                                             </a>    
                                         </li>';
                     }
