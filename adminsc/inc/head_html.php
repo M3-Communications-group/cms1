@@ -18,6 +18,8 @@
     <script src="assets/js/head.js"></script>
 
     <!-- Bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 

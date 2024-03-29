@@ -16,7 +16,7 @@
 
 
     <link rel="stylesheet" href="css\app.min.css">
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="images\statehouse_crest.jpg">
     <link rel="stylesheet" href="css\bootstrap.min.css">
     <script src="js\app.min.js"></script>
     <script src="js\head.js"></script>

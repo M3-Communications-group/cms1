@@ -52,20 +52,7 @@ if ($action == 'view') {
     }
 }
 ?>
-<script>
-    var rows = document.querySelectorAll('table tr:not(:first-child)');
-    rows.forEach(function(row) {
-        var link = row.cells[1].querySelector('a');
 
-        link.setAttribute('href', '#ModalEdit');
-        link.setAttribute('data-bs-toggle', 'modal');
-        link.setAttribute('data-bs-target', '#ModalEdit');
-
-
-
-
-    });
-</script>
 
 <a href="?admin_option=28&amp;start=view&amp;&amp;editID=1400&amp;action=edit"><img src="images/edit.gif" alt="" width="16" height="16" border="0"><img src="../uploads/galls_photos/1400_sjWC6t0Ux.jpg" border="0"></a>
 
@@ -173,7 +160,7 @@ if ($action == 'view') {
                 }
                 if (!empty($edit_additional_stuff_bottom)) {
                     echo additional_stuff();
-                }
+                }   
                 echo '
 		<script language="JavaScript">
                     function content_doonsubmit(mmmyform) { 
@@ -207,18 +194,7 @@ if ($action == 'view') {
 
 
                 ?>
-<script>
-    function toggle_color(row) {
-        var td = row.getElementsByTagName('td')[4]; // Seleccionar el quinto td (índice 4)
-        var link = td.querySelector('a');
 
-        // Agregar las propiedades data-bs-toggle y data-bs-target al enlace
-        link.setAttribute('data-bs-toggle', 'modal');
-        link.setAttribute('data-bs-target', '#ModalEdit');
-
-        // Realizar acciones adicionales si es necesario
-    }
-</script>
 <script>
     function toggle_color(row) {
         var td = row.getElementsByTagName('td')[4]; // Seleccionar el quinto td (índice 4)
