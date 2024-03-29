@@ -48,17 +48,17 @@
             <div class="app-menu">
 
                 <!-- Brand Logo -->
-                <div class="logo-box my-4">
+                <div class="logo-box">
                     <!-- Brand Logo Light -->
                     <a href="main.php" class="logo-light">
-                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 10dvh;max-height: 125px; min-height: 83px;">
-                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh;max-height: 47px; min-height: 30px;">
+                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 60px;">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                     </a>
 
                     <!-- Brand Logo Dark -->
                     <a href="main.php" class="logo-dark">
-                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 10dvh; max-height: 125px; min-height: 83px;">
-                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh;max-height: 47px; min-height: 30px;">
+                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 60px;">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                     </a>
                 </div>
 
@@ -137,14 +137,14 @@
                             <div class="logo-box">
                                 <!-- Brand Logo Light -->
                                 <a href="main.php" class="logo-light">
-                                    <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 10dvh; max-height: 47px;min-height:30px;">
-                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh; max-height: 47px;min-height:30px;">
+                                    <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 60px;">
+                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                                 </a>
 
                                 <!-- Brand Logo Dark -->
                                 <a href="main.php" class="logo-dark">
-                                    <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 10dvh; max-height: 47px;min-height:30px;">
-                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh; max-height: 47px;min-height:30px;">
+                                    <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 60px;">
+                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                                 </a>
                             </div>
 
@@ -195,7 +195,7 @@
                             <!-- Light/Darj Mode Toggle Button -->
                             <li class="d-none d-sm-inline-block">
                                 <div class="nav-link waves-effect waves-light" id="light-dark-mode">
-                                <i class="bi bi-brightness-high-fill me-2"></i> / <i class="bi bi-moon ms-2"></i>
+                                    <i class="bi bi-brightness-high-fill me-2"></i> / <i class="bi bi-moon ms-2"></i>
                                 </div>
                             </li>
 
