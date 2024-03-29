@@ -3,35 +3,82 @@
 
 <head>
     <title>Admin Tool</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="icon" type="image/x-icon" href="images/statehouse_crest-removebg-preview.png">
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css?version=2" />
+    <link rel="icon" type="image/x-icon" href="images\statehouse_crest-removebg-preview.png">
 
-    <!-- Bootstrap CSS CDN -->
-    <link id="app-style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-    <!-- Bootstrap Icons CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
-    <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <!-- Popper.js CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="css/style.css?version=2">
-    <link rel="stylesheet" type="text/css" href="css/app.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css\app.min.css">
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="css\bootstrap.min.css">
+    <script src="js\app.min.js"></script>
+    <script src="js\head.js"></script>
+    <script src="js\vendor.min.js"></script>
 
-    <!-- Custom JavaScript -->
-    <script src="assets/js/head.js"></script>
-    <script src="assets/js/app.min.js"></script>
-
-    <!-- TinyMCE -->
     <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+    <script language="JavaScript">
+        function del(delurl) {
+            if (confirm('Do You really want to delete this record?')) {
+                if (confirm('OK!')) {
+                    tmp = document.getElementById('mycustsearchform');
+                    if (tmp != null && (tmp.method == 'POST' || tmp.method == 'post')) {
+                        tmp.action = delurl;
+                        tmp.submit();
+                    } else {
+                        location.href = delurl;
+                    }
+                }
+            }
+        }
+
+        function change_status(delurl) {
+            location.href = delurl;
+        }
+
+        function toggle_visibility(element, element_img) {
+            var tmp = element.style;
+            var tmp_img = element_img.src;
+            if (tmp.display == 'block') {
+                tmp.display = 'none';
+                element_img.src = 'images/link_plus.gif';
+            } else {
+                tmp.display = 'block';
+                element_img.src = 'images/link_minus.gif';
+            }
+        }
+
+        function openWindow(mypage, myname, w, h, scroll) {
+            var winl = (screen.width - w) / 2;
+            var wint = (screen.height - h) / 2;
+            winprops = 'height=' + h + ',width=' + w + ',top=' + wint + ',left=' + winl + ',scrollbars=' + scroll + ',resizable'
+            gmtWindow = window.open(mypage, myname, winprops)
+            if (parseInt(navigator.appVersion) >= 4) {
+                gmtWindow.window.focus();
+            }
+        }
+
+        function make_dependency(myindex, mydiv) {
+            // alert(myindex.value);
+            tmp = document.getElementById(mydiv);
+            tmp.innerHTML = eval('dep_' + mydiv + '_' + myindex.value);
+        }
+
+        function toggle_color(element) {
+            var tmp = element.style;
+            if (tmp.background == '') {
+                tmp.background = '#efefef';
+            } else {
+                tmp.background = '';
+            }
+        }
+    </script>
 
 </head>
 
@@ -108,18 +155,69 @@
                                         <button id="toggle-menu" class="button-toggle-menu">
                                             <i class="bi bi-list"></i>
                                         </button>
-                                        <!-- <script>
-                                            
+                                        <script>
                                             document.getElementById('toggle-menu').addEventListener('click', function() {
                                                 var e = n.config.sidenav.size,
                                                     t = n.html.getAttribute("data-sidenav-size", e);
                                                 "full" === t ? n.showBackdrop() : "fullscreen" == e ? "fullscreen" === t ? n.changeLeftbarSize("fullscreen" == e ? "default" : e, !1) : n.changeLeftbarSize("fullscreen", !1) : "condensed" === t ? n.changeLeftbarSize("condensed" == e ? "default" : e, !1) : n.changeLeftbarSize("condensed", !1), n.html.classList.toggle("sidebar-enable")
                                             })
-                                        </script> -->
+                                        </script>
                                     </div>
 
                                     <ul class="topbar-menu d-flex align-items-center">
 
+                                        <!-- App Dropdown -->
+                                        <li class="dropdown d-none d-md-inline-block">
+                                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                                <i class="fe-grid font-22"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
+
+                                                <div class="p-2">
+                                                    <div class="row g-0">
+                                                        <div class="col">
+                                                            <a class="dropdown-icon-item" href="#">
+                                                                <img src="images/brands/slack.png" alt="slack">
+                                                                <span>Slack</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a class="dropdown-icon-item" href="#">
+                                                                <img src="images/brands/github.png" alt="Github">
+                                                                <span>GitHub</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a class="dropdown-icon-item" href="#">
+                                                                <img src="images/brands/dribbble.png" alt="dribbble">
+                                                                <span>Dribbble</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row g-0">
+                                                        <div class="col">
+                                                            <a class="dropdown-icon-item" href="#">
+                                                                <img src="images/brands/bitbucket.png" alt="bitbucket">
+                                                                <span>Bitbucket</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a class="dropdown-icon-item" href="#">
+                                                                <img src="images/brands/dropbox.png" alt="dropbox">
+                                                                <span>Dropbox</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col">
+                                                            <a class="dropdown-icon-item" href="#">
+                                                                <img src="images/brands/g-suite.png" alt="G Suite">
+                                                                <span>G Suite</span>
+                                                            </a>
+                                                        </div>
+                                                    </div> <!-- end row-->
+                                                </div>
+                                            </div>
+                                        </li>
 
                                         <!-- Language flag dropdown  -->
                                         <li class="dropdown d-none d-md-inline-block">

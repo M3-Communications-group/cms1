@@ -120,7 +120,7 @@ if ($action == 'view') {
                         mmmyform.submit();
                     } 
                     
-		</scrip>';
+		</script>';
                 echo '
             <script>
             var inputs = document.getElementsByTagName("input");
