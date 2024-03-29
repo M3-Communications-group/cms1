@@ -1,44 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" data-topbar-color="dark">
+<html lang="en" data-topbar-color="dark" class="pb-0">
 
-    <head>
-        <meta charset="utf-8" />
-        <title>Calendar | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
+<head>
+    <meta charset="utf-8" />
+    <title>Calendar | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
 
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="images\statehouse_crest.jpg">
 
-        <!-- Plugin css -->
-        <link href="../assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+    <!-- Plugin css -->
+    <link href="../assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
 
-        <!-- Theme Config Js -->
-        <script src="assets/js/head.js"></script>
+    <!-- Theme Config Js -->
+    <script src="assets/js/head.js"></script>
 
-        <!-- Bootstrap css -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
-        <!-- App css -->
-        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
 
-        <!-- Icons css -->
-        <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-        <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="css/style.css?version=2">
-        <link rel="stylesheet" type="text/css" href="css/app.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    
-        <!-- Custom JavaScript -->
-        <script src="assets/js/head.js"></script>
-        <script src="assets/js/app.min.js"></script>
-    </head>
+    <!-- Icons css -->
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css?version=2">
+    <link rel="stylesheet" type="text/css" href="css/app.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
-    <body class="p-0">
-        <?php
-        if (empty($_GET["hide_nav"])) {
-        ?>
+    <!-- Custom JavaScript -->
+    <script src="assets/js/head.js"></script>
+    <script src="assets/js/app.min.js"></script>
+</head>
+
+<body class="pt-0 mt-0">
+    <?php
+    if (empty($_GET["hide_nav"])) {
+    ?>
         <!-- Begin page -->
         <div id="wrapper">
 
@@ -47,17 +48,17 @@
             <div class="app-menu">
 
                 <!-- Brand Logo -->
-                <div class="logo-box">
+                <div class="logo-box my-4">
                     <!-- Brand Logo Light -->
-                    <a href="index.html" class="logo-light">
-                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg">
-                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
+                    <a href="main.php" class="logo-light">
+                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 10dvh;max-height: 125px; min-height: 83px;">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh;max-height: 47px; min-height: 30px;">
                     </a>
 
                     <!-- Brand Logo Dark -->
-                    <a href="index.html" class="logo-dark">
-                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg">
-                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
+                    <a href="main.php" class="logo-dark">
+                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 10dvh; max-height: 125px; min-height: 83px;">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh;max-height: 47px; min-height: 30px;">
                     </a>
                 </div>
 
@@ -135,27 +136,29 @@
                             <!-- Topbar Brand Logo -->
                             <div class="logo-box">
                                 <!-- Brand Logo Light -->
-                                <a href="index.html" class="logo-light">
-                                    <img src="images/statehouse_crest-removebg-preview.png" alt="logo" class="logo-lg">
-                                    <img src="images/statehouse_crest-removebg-preview.png" alt="small logo" class="logo-sm">
+                                <a href="main.php" class="logo-light">
+                                    <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 10dvh; max-height: 47px;min-height:30px;">
+                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh; max-height: 47px;min-height:30px;">
                                 </a>
 
                                 <!-- Brand Logo Dark -->
                                 <a href="main.php" class="logo-dark">
-                                    <img src="images/statehouse_crest-removebg-preview.png" alt="dark logo" class="logo-lg">
-                                    <img src="images/statehouse_crest-removebg-preview.png" class="logo-sm">
+                                    <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 10dvh; max-height: 47px;min-height:30px;">
+                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh; max-height: 47px;min-height:30px;">
                                 </a>
                             </div>
 
                             <!-- Sidebar Menu Toggle Button -->
                             <button class="button-toggle-menu">
-                                <i class="bi bi-list"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                                </svg>
                             </button>
 
                         </div>
 
                         <ul class="topbar-menu d-flex align-items-center">
-                           
+
 
 
                             <!-- Language flag dropdown  -->
@@ -192,8 +195,11 @@
                             <!-- Light/Darj Mode Toggle Button -->
                             <li class="d-none d-sm-inline-block">
                                 <div class="nav-link waves-effect waves-light" id="light-dark-mode">
-                                    <i class="ri-moon-line font-22"></i>
+                                <i class="bi bi-brightness-high-fill me-2"></i> / <i class="bi bi-moon ms-2"></i>
                                 </div>
+                            </li>
+
+
                             </li>
 
                             <!-- User Dropdown -->
@@ -283,26 +289,6 @@
                     </div> <!-- container -->
 
                 </div> <!-- content -->
-
-                <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div><script>document.write(new Date().getFullYear())</script> © Ubold - <a href="https://coderthemes.com/" target="_blank">Coderthemes.com</a></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
-                                    <a href="javascript: void(0);">About</a>
-                                    <a href="javascript: void(0);">Support</a>
-                                    <a href="javascript: void(0);">Contact Us</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-                <!-- end Footer -->
-
             </div>
 
             <!-- ============================================================== -->
@@ -333,7 +319,7 @@
             </div>
 
         </footer>
- 
+
 
         <!-- Vendor js -->
         <script src="assets/js/vendor.min.js"></script>
@@ -348,5 +334,6 @@
         <!-- Calendar init -->
         <script src="assets/js/pages/calendar.init.js"></script>
 
-    </body>
+</body>
+
 </html>
