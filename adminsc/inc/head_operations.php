@@ -86,8 +86,8 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
         $menu_html .= '<li class="menu-title">Navigation</li>';
         $menu_html .= '<li class="menu-item" style=" padding-left: 0px;">';
         $menu_html .=    '<a class="menu-link" href="#menuCms" data-bs-toggle="collapse">';
-        $menu_html .=        '<span class="menu-icon"><i class="bi bi-gear"></i></i></span>';
-        $menu_html .=        '<span class="menu-text"> CMS </span><i class="bi bi-caret-down"></i>';
+        $menu_html .=        '<span><img src="images\icons\Cms.svg"></span>';
+        $menu_html .=        '<span style="margin-left:-27px" class="menu-text">CMS</span><i class="bi bi-caret-down"></i>';
 
         $menu_html .=    '</a>';
         $menu_html .=    '<div class="collapse" id="menuCms">';

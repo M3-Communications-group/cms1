@@ -1,357 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-topbar-color="dark">
+
 <head>
-    <title>Admin Tool</title>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/style.css?version=2" />
-    <link rel="icon" type="image/x-icon" href="images\statehouse_crest-removebg-preview.png">
+    <meta charset="utf-8" />
+    <title>Calendar | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="images\statehouse_crest.jpg">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Plugin css -->
+    <link href="../assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Theme Config Js -->
+    <script src="assets/js/head.js"></script>
+
+    <!-- Bootstrap css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- App css -->
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Icons css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css?version=2">
+    <link rel="stylesheet" type="text/css" href="css/app.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    
 
-
-    <link rel="stylesheet" href="css\app.min.css">
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
-    <link rel="stylesheet" href="css\bootstrap.min.css">
-    <script src="js\app.min.js"></script>
-    <script src="js\head.js"></script>
-    <script src="js\vendor.min.js"></script>
-
-    <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
-    <script language="JavaScript">
-        function del(delurl) {
-            if (confirm('Do You really want to delete this record?')) {
-                if (confirm('OK!')) {
-                    tmp = document.getElementById('mycustsearchform');
-                    if (tmp != null && (tmp.method == 'POST' || tmp.method == 'post')) {
-                        tmp.action = delurl;
-                        tmp.submit();
-                    } else {
-                        location.href = delurl;
-                    }
-                }
-            }
-        }
-
-        function change_status(delurl) {
-            location.href = delurl;
-        }
-
-        function toggle_visibility(element, element_img) {
-            var tmp = element.style;
-            var tmp_img = element_img.src;
-            if (tmp.display == 'block') {
-                tmp.display = 'none';
-                element_img.src = 'images/link_plus.gif';
-            } else {
-                tmp.display = 'block';
-                element_img.src = 'images/link_minus.gif';
-            }
-        }
-
-        function openWindow(mypage, myname, w, h, scroll) {
-            var winl = (screen.width - w) / 2;
-            var wint = (screen.height - h) / 2;
-            winprops = 'height=' + h + ',width=' + w + ',top=' + wint + ',left=' + winl + ',scrollbars=' + scroll + ',resizable'
-            gmtWindow = window.open(mypage, myname, winprops)
-            if (parseInt(navigator.appVersion) >= 4) {
-                gmtWindow.window.focus();
-            }
-        }
-
-        function make_dependency(myindex, mydiv) {
-            // alert(myindex.value);
-            tmp = document.getElementById(mydiv);
-            tmp.innerHTML = eval('dep_' + mydiv + '_' + myindex.value);
-        }
-
-        function toggle_color(element) {
-            var tmp = element.style;
-            if (tmp.background == '') {
-                tmp.background = '#efefef';
-            } else {
-                tmp.background = '';
-            }
-        }
-    </script>
-
+    <!-- Custom JavaScript -->
+    <script src="assets/js/head.js"></script>
+    <script src="assets/js/app.min.js"></script>
 </head>
 
 <body class="p-0">
     <?php
     if (empty($_GET["hide_nav"])) {
     ?>
-
-        <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
-            <tr>
-                <td valign="top">
-
-                    <div id="wrapper">
-
-                        <!-- menu-left -->
-                        <div class="app-menu">
-                            <div class="scrollbar py-3  ">
+        <!-- Begin page -->
+        <div id="wrapper">
 
 
-                                <!--- Menu -->
-                                <ul class="menu">
-                                    <!-- Brand Logo -->
-                                    <div class="logo-box mt-4 mb-5">
-                                        <a href="./main.php"><img src="images/statehouse_crest.jpg" alt="Logo" width="112" border="0" align="left"></a>
-                                    </div>
-                                    <!--- Menu -->
-                                    <ul class="menu scrollbar" style="max-height: 67dvh; overflow-x: hidden;">
+            <!-- ========== Menu ========== -->
+            <div class="app-menu">
 
+                <!-- Brand Logo -->
+                <div class="logo-box my-3">
+                    <!-- Brand Logo Light -->
+                    <a href="main.php" class="logo-light">
+                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 7dvh">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
+                    </a>
 
+                    <!-- Brand Logo Dark -->
+                    <a href="main.php" class="logo-dark">
+                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 7dvh">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm">
+                    </a>
+                </div>
 
-                                        <ul class="menu">
-                                            <?php
-                                            echo $menu_html;
+                <!-- menu-left -->
+                <div class="scrollbar">
 
+                    <!-- User box -->
+                    <div class="user-box text-center">
+                        <img src="assets/images/users/user-1.jpg" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
+                        <div class="dropdown">
+                            <a href="javascript: void(0);" class="dropdown-toggle h5 mb-1 d-block" data-bs-toggle="dropdown">Geneva Kennedy</a>
+                            <div class="dropdown-menu user-pro-dropdown">
 
-                                            ?>
-                                            <style>
-                                                
-                                            </style>
-                                        </ul>
-                                    </ul>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-user me-1"></i>
+                                    <span>My Account</span>
+                                </a>
 
-                                    <!--- End Menu -->
-                                    <div class="clearfix"></div>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-settings me-1"></i>
+                                    <span>Settings</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-lock me-1"></i>
+                                    <span>Lock Screen</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-log-out me-1"></i>
+                                    <span>Logout</span>
+                                </a>
+
                             </div>
                         </div>
+                        <p class="text-muted mb-0">Admin Head</p>
+                    </div>
 
-                        <!-- ============================================================== -->
-                        <!-- Start Page Content here -->
-                        <!-- ============================================================== -->
-                        <div class="content-page ">
+                    <!--- Menu -->
+                    <ul class="menu">
+                        <?php
+                        echo $menu_html;
 
-                            <!-- ========== Topbar Start ========== -->
-                            <div class="navbar-custom">
-                                <div class="topbar">
-                                    <div class="topbar-menu d-flex align-items-center  gap-1">
 
-                                        <!-- Topbar Brand Logo -->
-                                        <div class="logo-box">
-                                            <!-- Brand Logo Light -->
-                                            <a href="index.html" class="logo-light">
-                                                <img src="images/statehouse_crest-removebg-preview.png" alt="logo" class="logo-lg">
-                                                <img src="images/statehouse_crest-removebg-preview.png" alt="small logo" class="logo-sm">
-                                            </a>
+                        ?>
+                        <style>
 
-                                            <!-- Brand Logo Dark -->
-                                            <a href="main.php" class="logo-dark">
-                                                <img src="images/statehouse_crest-removebg-preview.png" alt="dark logo" class="logo-lg">
-                                                <img src="images/statehouse_crest-removebg-preview.png" class="logo-sm">
-                                            </a>
-                                        </div>
+                        </style>
+                    </ul>
+                    <!--- End Menu -->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- ========== Left menu End ========== -->
 
-                                        <!-- Sidebar Menu Toggle Button -->
-                                        <button class="button-toggle-menu">
-                                            <i class="mdi mdi-menu"></i>
-                                        </button>
+
+
+
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+
+                <!-- ========== Topbar Start ========== -->
+                <div class="navbar-custom">
+                    <div class="topbar">
+                        <div class="topbar-menu d-flex align-items-center gap-1">
+
+                            <!-- Topbar Brand Logo -->
+                            <div class="logo-box">
+                                <!-- Brand Logo Light -->
+                                <a href="main.php" class="logo-light">
+                                    <img src="images/statehouse_crest-removebg-preview.png" alt="logo" class="logo-lg">
+                                    <img src="images/statehouse_crest-removebg-preview.png" alt="small logo" class="logo-sm">
+                                </a>
+
+                                <!-- Brand Logo Dark -->
+                                <a href="main.php" class="logo-dark">
+                                    <img src="images/statehouse_crest-removebg-preview.png" alt="dark logo" class="logo-lg">
+                                    <img src="images/statehouse_crest-removebg-preview.png" class="logo-sm">
+                                </a>
+                            </div>
+
+                            <!-- Sidebar Menu Toggle Button -->
+                            <button class="button-toggle-menu">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                                </svg>
+                            </button>
+
+                        </div>
+
+                        <ul class="topbar-menu d-flex align-items-center">
+
+
+
+                            <!-- Language flag dropdown  -->
+                            <li class="dropdown d-none d-md-inline-block">
+                                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img src="images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">
+                                        <img src="images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">
+                                        <img src="images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">
+                                        <img src="images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item">
+                                        <img src="images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                    </a>
+
+                                </div>
+                            </li>
+
+                            <!-- Light/Darj Mode Toggle Button -->
+                            <li class="d-none d-sm-inline-block">
+                                <div class="nav-link waves-effect waves-light" id="light-dark-mode">
+                                    <i class="ri-moon-line font-22"></i>
+                                </div>
+                            </li>
+
+                            <!-- User Dropdown -->
+                            <li class="dropdown">
+                                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img src="images/users/user-1.jpg" alt="user-image" class="rounded-circle">
+                                    <span class="ms-3 d-none d-md-inline-block">
+                                        <h1 class="user"><?php echo $_SESSION['m3cms']["name"] ?><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                                                <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659" />
+                                            </svg> </h1>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
+                                    <!-- item-->
+                                    <div class="my-3">
+                                        <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change password</a>
+
+                                    </div>
+                                    <!-- item-->
+                                    <div class=" mt-4 mb-3">
+                                        <a class="mx-2 fs-5 text-primary" href="index.php?logout" style="color: #850208;">Logout</a><br>
+
                                     </div>
 
-                                    <ul class="topbar-menu d-flex align-items-center">
+                                </div>
+                            </li>
 
-                                        <!-- App Dropdown -->
-                                        <li class="dropdown d-none d-md-inline-block">
-                                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                                <i class="fe-grid font-22"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
+                        </ul>
+                    </div>
+                </div>
+                <!-- ========== Topbar End ========== -->
 
-                                                <div class="p-2">
-                                                    <div class="row g-0">
-                                                        <div class="col">
-                                                            <a class="dropdown-icon-item" href="#">
-                                                                <img src="images/brands/slack.png" alt="slack">
-                                                                <span>Slack</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <a class="dropdown-icon-item" href="#">
-                                                                <img src="images/brands/github.png" alt="Github">
-                                                                <span>GitHub</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <a class="dropdown-icon-item" href="#">
-                                                                <img src="images/brands/dribbble.png" alt="dribbble">
-                                                                <span>Dribbble</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                <div class="content">
 
-                                                    <div class="row g-0">
-                                                        <div class="col">
-                                                            <a class="dropdown-icon-item" href="#">
-                                                                <img src="images/brands/bitbucket.png" alt="bitbucket">
-                                                                <span>Bitbucket</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <a class="dropdown-icon-item" href="#">
-                                                                <img src="images/brands/dropbox.png" alt="dropbox">
-                                                                <span>Dropbox</span>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col">
-                                                            <a class="dropdown-icon-item" href="#">
-                                                                <img src="images/brands/g-suite.png" alt="G Suite">
-                                                                <span>G Suite</span>
-                                                            </a>
-                                                        </div>
-                                                    </div> <!-- end row-->
-                                                </div>
-                                            </div>
-                                        </li>
+                    <!-- Start Content-->
+                    <div class="container-fluid">
 
-                                        <!-- Language flag dropdown  -->
-                                        <li class="dropdown d-none d-md-inline-block">
-                                            <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                                <img src="images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
-                                            </a>
+                        <div class="row mt-5">
+                        <?php
+                        echo '
+                        <table border="0" cellpadding="0" cellspacing="0">
+                        <tr><td valign="top">';
 
-                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
-                                                    <img src="images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
-                                                </a>
+                        $pname = '<a href="' . $_SERVER["PHP_SELF"] . '?table=' . $table . '&admin_option=' . $admin_option . '">' . $table_name . '</a>';
+                        if (empty($_GET["hide_nav"]) && !empty($table_categories)) {
+                            echo '<table border="0" cellpadding="0" cellspacing="0">';
+                            echo '<tr><td><a href="' . $_SERVER["PHP_SELF"] . '?admin_option=' . $admin_option . '&table=' . $table . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '"><img src="images/house.gif" alt="" width="16" height="15" border="0"></a></td></tr>';
 
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
-                                                    <img src="images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
-                                                </a>
+                            if (!empty($table_categories_title_field) && check_field_exists($table_categories, $table_categories_title_field)) {
+                                $fieldname = $table_categories_title_field;
+                            } elseif (check_field_exists($table_categories, "name")) {
+                                $fieldname = "name";
+                            } elseif (check_field_exists($table_categories, "title")) {
+                                $fieldname = "title";
+                            } elseif (check_field_exists($table_categories, "en_name")) {
+                                $fieldname = "en_name";
+                            } elseif (check_field_exists($table_categories, "en_title")) {
+                                $fieldname = "en_title";
+                            } elseif (check_field_exists($table_categories, "title_" . $lang)) {
+                                $fieldname = "title_" . $lang;
+                            } elseif (check_field_exists($table_categories, "name_" . $lang)) {
+                                $fieldname = "name_" . $lang;
+                            } else {
+                                $fieldname = "id";
+                            }
 
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
-                                                    <img src="images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
-                                                </a>
+                            $table_fields = array(
+                                // 'Name' => '<a href="' . $_SERVER["PHP_SELF"] . '?admin_option=' . $admin_option . '&table=###content_table###&action=view&pid=###id###' . (!empty($_GET["common_sense"])?"&common_sense=1":"") . '">###name###</a>', 
+                                'Name' => '<a href="' . $_SERVER["PHP_SELF"] . '?admin_option=' . $admin_option . '&table=' . $table . '&action=view&pid=###id###' . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">###' . $fieldname . '###</a>',
+                            );
+                            sitemap_fancy($table_categories, 0, 0, $table_fields, 'showorder', 1, $table_categories_query);
+                            echo '</table>';
+                        }
 
-                                                <!-- item-->
-                                                <a href="javascript:void(0);" class="dropdown-item">
-                                                    <img src="images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
-                                                </a>
+                        if ($show_more) {
+                            echo '</td><td valign="top"> <div style="margin: 0px 0px 0px 20px;">' . '<h2>' . $pname . '</h2>' . (($show_viewadd) ? $menu_viewadd : '') . '<div class="clear"></div>';
+                        }
+                    } else {
+                        echo $menu_viewadd;
+                    }
+                        ?>
+                        </div>
 
-                                            </div>
-                                        </li>
+                        <!-- end row -->
 
-                                        <!-- User Dropdown -->
-                                        <li class="dropdown">
-                                            <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                                <img src="images/users/user-1.jpg" alt="user-image" class="rounded-circle">
-                                                <span class="ms-3 d-none d-md-inline-block">
-                                                    <h1 class="user"><?php echo $_SESSION['m3cms']["name"] ?><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
-  <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
-</svg> </h1>
-                                                </span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
-                                                <!-- item-->
-                                                <div class="my-3">
-                                                    <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change password</a>
+                    </div> <!-- container -->
 
-                                                </div>
-                                                <!-- item-->
-                                                <div class=" mt-4 mb-3">
-                                                    <a class="mx-2 fs-5 text-primary" href="index.php?logout" style="color: #850208;">Logout</a><br>
+                </div> <!-- content -->
 
-                                                </div>
-
-                                            </div>
-                                        </li>
-
-                                        <!-- Right Bar offcanvas button (Theme Customization Panel) -->
-                                        <li>
-                                            <a class="nav-link waves-effect waves-light" data-bs-toggle="offcanvas" href="#theme-settings-offcanvas">
-                                                <i class="fe-settings font-22"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <script>
+                                        document.write(new Date().getFullYear())
+                                    </script> © Ubold - <a href="https://coderthemes.com/" target="_blank">Coderthemes.com</a>
                                 </div>
                             </div>
-                            <!-- ========== Topbar End ========== -->
-
-                            <div class="content">
-
-                                <!-- Start Content-->
-                                <div class="container-fluid">
-
-                                    <div class="row mt-5">
-                                    <?php
-                                    echo '
-                                    <table border="0" cellpadding="0" cellspacing="0">
-                                    <tr><td valign="top">';
-
-
-                                    $pname = '<a href="' . $_SERVER["PHP_SELF"] . '?table=' . $table . '&admin_option=' . $admin_option . '">' . $table_name . '</a>';
-                                    if (empty($_GET["hide_nav"]) && !empty($table_categories)) {
-                                        echo '<table border="0" cellpadding="0" cellspacing="0">';
-                                        echo '<tr><td><a href="' . $_SERVER["PHP_SELF"] . '?admin_option=' . $admin_option . '&table=' . $table . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '"><img src="images/house.gif" alt="" width="16" height="15" border="0"></a></td></tr>';
-
-                                        if (!empty($table_categories_title_field) && check_field_exists($table_categories, $table_categories_title_field)) {
-                                            $fieldname = $table_categories_title_field;
-                                        } elseif (check_field_exists($table_categories, "name")) {
-                                            $fieldname = "name";
-                                        } elseif (check_field_exists($table_categories, "title")) {
-                                            $fieldname = "title";
-                                        } elseif (check_field_exists($table_categories, "en_name")) {
-                                            $fieldname = "en_name";
-                                        } elseif (check_field_exists($table_categories, "en_title")) {
-                                            $fieldname = "en_title";
-                                        } elseif (check_field_exists($table_categories, "title_" . $lang)) {
-                                            $fieldname = "title_" . $lang;
-                                        } elseif (check_field_exists($table_categories, "name_" . $lang)) {
-                                            $fieldname = "name_" . $lang;
-                                        } else {
-                                            $fieldname = "id";
-                                        }
-
-                                        $table_fields = array(
-                                            // 'Name' => '<a href="' . $_SERVER["PHP_SELF"] . '?admin_option=' . $admin_option . '&table=###content_table###&action=view&pid=###id###' . (!empty($_GET["common_sense"])?"&common_sense=1":"") . '">###name###</a>', 
-                                            'Name' => '<a href="' . $_SERVER["PHP_SELF"] . '?admin_option=' . $admin_option . '&table=' . $table . '&action=view&pid=###id###' . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">###' . $fieldname . '###</a>',
-                                        );
-                                        sitemap_fancy($table_categories, 0, 0, $table_fields, 'showorder', 1, $table_categories_query);
-                                        echo '</table>';
-                                    }
-
-                                    if ($show_more) {
-                                        echo '</td><td valign="top"> <div style="margin: 0px 0px 0px 20px;">' . '<h2>' . $pname . '</h2>' . (($show_viewadd) ? $menu_viewadd : '') . '<div class="clear"></div>';
-                                    }
-                                } else {
-                                    echo $menu_viewadd;
-                                }
-                                    ?>
-                                    </div>
-
-                                    <!-- end row -->
-
-                                </div> <!-- container -->
-
-                            </div> <!-- content -->
+                            <div class="col-md-6">
+                                <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <footer class="footer">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div>
-                                        <script>
-                                            document.write(new Date().getFullYear())
-                                        </script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
-                                        <a href="javascript: void(0);">About</a>
-                                        <a href="javascript: void(0);">Support</a>
-                                        <a href="javascript: void(0);">Contact Us</a>
-                                    </div>
-                                </div>
-                            </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script>© <a href="https://www.m3bg.com/" target="_blank">M3 Communications Group, Inc.</a>
                         </div>
-                    </footer>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end footer-links">
+                            <a href="javascript: void(0);">About</a>
+                            <a href="javascript: void(0);">Support</a>
+                            <a href="javascript: void(0);">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+
+        <!-- Vendor js -->
+        <script src="assets/js/vendor.min.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.min.js"></script>
+
+        <!-- plugin js -->
+        <script src="../assets/libs/moment/min/moment.min.js"></script>
+        <script src="../assets/libs/fullcalendar/main.min.js"></script>
+
+        <!-- Calendar init -->
+        <script src="assets/js/pages/calendar.init.js"></script>
+
+</body>
+
+</html>
