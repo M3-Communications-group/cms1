@@ -80,22 +80,27 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
     make_menu(0);
     $additional = '';
 
-  if ($_SESSION['m3cms']["group_id"] == 0) {
-    $menu_html[0] .= '<li class="menu-title">Navigation</li>';
-    $menu_html[0] .= '<li class="menu-item">';
-    $menu_html[0] .= '<a href="#menuCms" data-bs-toggle="collapse" class="menu-link">';
-    $menu_html[0] .= '<span class="menu-icon"><i data-feather="airplay"></i></span>';
-    $menu_html[0] .= '<span class="menu-text"> CMS </span>';
-    $menu_html[0] .= '</a>';
-    $menu_html[0] .= '<div class="collapse" id="menuCms">';
-    $menu_html[0] .= '<ul class="sub-menu">';
-    $menu_html[0] .= '<li class="menu-item"><a href="main.php?admin_option=0&action=view&table=m3cms_sitemap" class="menu-link"><span class="menu-text">List</span></a></li>';
-    $menu_html[0] .= '<li class="menu-item"><a href="main.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link"><span class="menu-text">Add</span></a></li>';
-    $menu_html[0] .= '</ul>';
-    $menu_html[0] .= '</div>';
-    $menu_html[0] .= '</li>';
-};
+    // Adding Navigation FUnctions to menu
+    if ($_SESSION['m3cms']["group_id"] == 0) {
 
+        $menu_html .= '<li class="menu-title">Navigation</li>';
+        $menu_html .= '<li class="menu-item" style=" padding-left: 0px;">';
+        $menu_html .=    '<a class="menu-link" href="#menuCms" data-bs-toggle="collapse">';
+        $menu_html .=        '<span class="menu-icon"><i class="bi bi-gear"></i></i></span>';
+        $menu_html .=        '<span class="menu-text"> CMS </span><i class="bi bi-caret-down"></i>';
+
+        $menu_html .=    '</a>';
+        $menu_html .=    '<div class="collapse" id="menuCms">';
+        $menu_html .=        '<ul class="sub-menu">';
+        $menu_html .=            '<li class="menu-item ms-3" style="padding-left:1px">
+                                        <a href="modal.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link" data-bs-toggle="modal" data-bs-target="#Modal">
+                                            <span class="menu-text" style="margin-left:-19px">Add</span>
+                                        </a>
+                                    </li>';
+        $menu_html .=        '</ul>';
+        $menu_html .=    '</div>';
+        $menu_html .= '</li>';
+    };
 
     $exclude_vars = array('delID', 'showordermove', 'showorderfield', 'active_new_status', 'active_field');
     $exclude_vars2 = array('delID', 'showordermove', 'showorderfield', 'active_new_status', 'active_field', 'start');
@@ -154,14 +159,14 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
     }
 
     if ($_SERVER["REQUEST_METHOD"] == 'POST' && !preg_match("/^(change_password|memcached)\.php$/i", $localfile) && preg_match("/^(edit|add)$/", $action)) {
-        $commit_result = commit($fields_to_manage, $table);
-    }
+       
+    } $commit_result = commit($fields_to_manage, $table);
 
     if ($_SERVER["REQUEST_METHOD"] == 'POST' && !$commit_result[0] && preg_match("/^(edit|add)$/", $action)) {
         $current_item = $_POST;
     } else {
         $current_item = array();
-        if (( preg_match("/edit|showorder|active/", $action) && $editID > 0 && ($_SESSION['m3cms']["perm_edit"] == '1' or $_SESSION['m3cms']["perm_edit"] == '2') ) || ($action == 'del' && $editID > 0 && ($_SESSION['m3cms']["perm_del"] == '1' or $_SESSION['m3cms']["perm_del"] == '2') )) {
+        if ((preg_match("/edit|showorder|active/", $action) && $editID > 0 && ($_SESSION['m3cms']["perm_edit"] == '1' or $_SESSION['m3cms']["perm_edit"] == '2')) || ($action == 'del' && $editID > 0 && ($_SESSION['m3cms']["perm_del"] == '1' or $_SESSION['m3cms']["perm_del"] == '2'))) {
 
             $where = '';
             if ($_SESSION['m3cms']["perm_edit"] == '2' && check_field_exists($table, "user_id")) {
