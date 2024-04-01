@@ -57,18 +57,41 @@ if (filter_input(INPUT_POST, "change")) {
 
 if ($showform) {
     echo '
-<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
-<form action="' . $_SERVER["PHP_SELF"] . '" method="post" id="main">
-<table border="0" cellpadding="5" cellspacing="0" class="normal_inputs change_password">
-	<tr><td>' . $admin_texts[$lang]["password_old"] . ': </td><td><input type="Password" name="old_password" value="" size="30"><br></td></tr>
-	<tr><td>' . $admin_texts[$lang]["password_new"] . ': </td><td><input type="Password" name="new_password" value="" size="30"><br></td></tr>
-	<tr><td>' . $admin_texts[$lang]["password_repeat"] . ': </td><td><input type="Password" name="new_password1" value="" size="30"><br></td></tr>
-	<tr><td colspan="2">
-	<input type="Hidden" name="change" value="1">
-	<input type=submit value="' . $admin_texts[$lang]["change"] . '"><br><br></td></tr>
-</table>
-</form>
-</tr></td></table>
-';
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <form action="' . $_SERVER["PHP_SELF"] . '" method="post" id="main" class="needs-validation" novalidate>
+                    <div class="form-group">
+                        <label for="old_password">' . $admin_texts[$lang]["password_old"] . ':</label>
+                        <input type="password" name="old_password" class="form-control" id="old_password" required>
+                        <div class="invalid-feedback">
+                            ' . $admin_texts[$lang]["password_required"] . '
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password">' . $admin_texts[$lang]["password_new"] . ':</label>
+                        <input type="password" name="new_password" class="form-control" id="new_password" required>
+                        <div class="invalid-feedback">
+                            ' . $admin_texts[$lang]["password_required"] . '
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password1">' . $admin_texts[$lang]["password_repeat"] . ':</label>
+                        <input type="password" name="new_password1" class="form-control" id="new_password1" required>
+                        <div class="invalid-feedback">
+                            ' . $admin_texts[$lang]["password_required"] . '
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="change" value="1">
+                        <button type="submit" class="btn btn-primary">' . $admin_texts[$lang]["change"] . '</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    ';
+    
+    
 }
 require("inc/bottom.php");

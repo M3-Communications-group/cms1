@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Calendar | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>PlaceHolder title name</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -217,7 +217,7 @@
                                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                                     <!-- item-->
                                     <div class="my-3">
-                                        <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change password</a>
+                                        <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change Password</a>
 
                                     </div>
                                     <!-- item-->

@@ -146,7 +146,10 @@ function locate_position($sitemap_id)
 
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
-                        $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+                        if ($_SERVER["PHP_SELF"] == '/new1-statehouse.gov.sc/public/adminsc/change_password.php') {
+                        } else {
+                            $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a class="addLink" data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+                        }
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];

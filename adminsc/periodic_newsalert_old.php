@@ -69,7 +69,7 @@ while ($arr = mysqli_fetch_array($result)) {
         $mail->Host = '196.13.208.12';
         //Set the SMTP port number - likely to be 25, 465 or 587
         $mail->Port = 25;
-        //Whether to use SMTP authentication
+        //Whether to use SMTP authenticatio
         $mail->SMTPAuth = false;
         $mail->SMTPSecure = false;
         $mail->SMTPAutoTLS = false;
