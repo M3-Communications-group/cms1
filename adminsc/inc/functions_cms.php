@@ -393,7 +393,7 @@ function make_pages_list($all_count, $start, $limit)
 {
     global $CURRENT_LOCATION2, $admin_texts, $lang;
 
-    $retval = '<div style="float: left; padding: 7px 5px 7px 5px;"><div style="float: left; ">';
+    $retval = '<ul class="pagination pagination-rounded">';
 
     $this_page = ceil(($start + 1) / $limit);
 
@@ -414,26 +414,28 @@ function make_pages_list($all_count, $start, $limit)
         $p_end = $all_pages;
         $p_start = 1;
     }
+
     if ($p_start > 1) {
-        $retval .= '<a href="' . $CURRENT_LOCATION2 . '&start=0">&laquo;</a> | ';
+        $retval .= '<li class="page-item"><a href="' . $CURRENT_LOCATION2 . '&start=0" class="page-link">&laquo;</a></li>';
     }
+
     for ($i = $p_start; $i <= $p_end; $i++) {
         if ($i == $this_page) {
-            $retval .= '<b>' . $i . '</b> | ';
+            $retval .= '<li class="page-item active"><span class="page-link">' . $i . '</span></li>';
         } else {
-            $retval .= '<a href="' . $CURRENT_LOCATION2 . '&start=' . (($i - 1) * $limit) . '">' . $i . '</a> | ';
+            $retval .= '<li class="page-item"><a href="' . $CURRENT_LOCATION2 . '&start=' . (($i - 1) * $limit) . '" class="page-link">' . $i . '</a></li>';
         }
     }
-    if ($this_page <> $all_pages) {
-        $retval = substr($retval, 0, -3);
-        $retval .= '<a href="' . $CURRENT_LOCATION2 . '&start=' . (($all_pages - 1) * $limit) . '">&raquo;</a>';
+
+    if ($this_page != $all_pages) {
+        $retval .= '<li class="page-item"><a href="' . $CURRENT_LOCATION2 . '&start=' . (($all_pages - 1) * $limit) . '" class="page-link">&raquo;</a></li>';
     }
-    $retval .= '
-		</div>
-		<div align="right" style="float: right; padding: 0px 50px 0px; ">' . $admin_texts[$lang]['total'] . ': <b>' . $all_count . '</b></div>
-	</div><div style="clear: both;"></div>';
+
+    $retval .= '</ul>';
+
     return $retval;
 }
+
 
 function array_wrap_values(&$item1, $key, $str)
 {
