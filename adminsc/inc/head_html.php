@@ -29,14 +29,74 @@
 
     <!-- Icons css -->
     <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css?version=2">
     <link rel="stylesheet" type="text/css" href="css/app.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
+    <!-- Switchery CSS -->
+    <link rel="stylesheet" href="css\switchery.min.css">
+
     <!-- Custom JavaScript -->
     <script src="assets/js/head.js"></script>
     <script src="assets/js/app.min.js"></script>
+    <script language="JavaScript">
+        function del(delurl) {
+            if (confirm('Do You really want to delete this element?')) {
+                if (confirm('Item deleted')) {
+                    tmp = document.getElementById('mycustsearchform');
+                    if (tmp != null && (tmp.method == 'POST' || tmp.method == 'post')) {
+                        tmp.action = delurl;
+                        tmp.submit();
+                    } else {
+                        location.href = delurl;
+                    }
+                }
+            }
+        }
+
+        function change_status(delurl) {
+            location.href = delurl;
+        }
+
+        function toggle_visibility(element, element_img) {
+            var tmp = element.style;
+            var tmp_img = element_img.src;
+            if (tmp.display == 'block') {
+                tmp.display = 'none';
+                element_img.src = 'images/link_plus.gif';
+            } else {
+                tmp.display = 'block';
+                element_img.src = 'images/link_minus.gif';
+            }
+        }
+
+        function openWindow(mypage, myname, w, h, scroll) {
+            var winl = (screen.width - w) / 2;
+            var wint = (screen.height - h) / 2;
+            winprops = 'height=' + h + ',width=' + w + ',top=' + wint + ',left=' + winl + ',scrollbars=' + scroll + ',resizable'
+            gmtWindow = window.open(mypage, myname, winprops)
+            if (parseInt(navigator.appVersion) >= 4) {
+                gmtWindow.window.focus();
+            }
+        }
+
+        function make_dependency(myindex, mydiv) {
+            // alert(myindex.value);
+            tmp = document.getElementById(mydiv);
+            tmp.innerHTML = eval('dep_' + mydiv + '_' + myindex.value);
+        }
+
+        function toggle_color(element) {
+            var tmp = element.style;
+            if (tmp.background == '') {
+                tmp.background = '#efefef';
+            } else {
+                tmp.background = '';
+            }
+        }
+    </script>
 </head>
 
 <body class="pt-0 mt-0">
@@ -336,6 +396,10 @@
 
         <!-- Calendar init -->
         <script src="assets/js/pages/calendar.init.js"></script>
+
+        <!-- Switchery js -->
+        <script src="js\switchery.min.js"></script>
+        <script src="js\selectize.min.js"></script>
 
 
 </body>
