@@ -238,12 +238,14 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
+                        
 
                         <div class="row mt-5">
                         <?php
                         echo '
                         <table border="0" cellpadding="0" cellspacing="0">
                         <tr><td valign="top">';
+                        
 
 
                         $pname = '<a href="' . $_SERVER["PHP_SELF"] . '?table=' . $table . '&admin_option=' . $admin_option . '">' . $table_name . '</a>';

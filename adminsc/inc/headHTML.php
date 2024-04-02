@@ -25,8 +25,8 @@
     <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
     <script language="JavaScript">
         function del(delurl) {
-            if (confirm('Do You really want to delete this record?')) {
-                if (confirm('OK!')) {
+            if (confirm('Do You really want to delete this element?')) {
+                if (confirm('Item deleted')) {
                     tmp = document.getElementById('mycustsearchform');
                     if (tmp != null && (tmp.method == 'POST' || tmp.method == 'post')) {
                         tmp.action = delurl;

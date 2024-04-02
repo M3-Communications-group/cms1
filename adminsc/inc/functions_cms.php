@@ -146,9 +146,8 @@ function locate_position($sitemap_id)
 
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
-                        if ($_SERVER["PHP_SELF"] == '/new1-statehouse.gov.sc/public/adminsc/change_password.php') {
-                        } else {
-                            $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a class="addLink" data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+                        if ($_SERVER["PHP_SELF"] != '/new1-statehouse.gov.sc/public/adminsc/change_password.php') {
+                            $menu_viewadd .= '<div  class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a class="addLink" data-bs-toggle="modal" data-bs-target="#ModalAdd" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
                         }
                     }
                     $table = $row["content_table"];
@@ -367,6 +366,9 @@ function sitemap($table, $fields_to_show, $pid, $level, $fields, $showorder, $st
     }
 }
 
+
+
+
 function show_table_header($headers)
 {
     reset($headers);
@@ -389,11 +391,13 @@ function show_table_row($row, $fields, $level, $img = 'spacer.gif')
     echo '</td></tr>';
 }
 
+
 function make_pages_list($all_count, $start, $limit)
 {
     global $CURRENT_LOCATION2, $admin_texts, $lang;
 
     $retval = '<ul class="pagination pagination-rounded">';
+    
 
     $this_page = ceil(($start + 1) / $limit);
 
@@ -447,7 +451,7 @@ function array_change_values(&$item2, $key, $row)
     $item2 = $row[$item2];
 }
 
-function search_replace($items, $values)
+function search_replace($items, $values, $img = null)
 {
     if (is_array($items)) {
         preg_match_all("/(###([-_a-zA-Z0-9]+)###)+/", $items[0], $regs);
@@ -468,6 +472,10 @@ function search_replace($items, $values)
             //echo "\$items = " . substr($items, 1) . ";";
             eval("\$items = " . substr($items, 1) . ";");
             //echo $items;
+        }
+        // Agregar clase solo a los enlaces que contienen 'action=edit'
+        if (strpos($items, 'action=edit') !== false) {
+            $items = preg_replace('/<a(.*?)href="([^"]*)"/', '<a$1class="editlink ' . $values['id'] . '" data-bs-toggle="modal" data-bs-target="#ModalEdit' . $values['id'] . '" ', $items);
         }
         return $items;
     }
@@ -1717,4 +1725,15 @@ function getRandomString($lenght = NULL, $api = FALSE)
         $string .= $characters[mt_rand(0, strlen($characters) - 1)];
     }
     return $string;
+}
+
+
+function getMaxId($table)
+{
+    $myquery = "SELECT MAX(id) AS max_id FROM $table";
+    $myResult = query($myquery); //Run the Query
+
+    $row = mysqli_fetch_array($myResult);
+
+    return $row['max_id'];
 }
