@@ -153,25 +153,4 @@ require("inc/bottom.php");
 <script>
     $('textarea').addClass('form-control');
 
-    var links = $('a');
-
-    links.each(function(index, link) {
-        var childs = $(link).children();
-
-        childs.each(function(index, child) {
-            if (child.tagName.toLowerCase() === 'img' && $(child).attr('src') === 'images/down.gif') {
-                var newChild = $('<i class="bi bi-arrow-down"></i>');
-                $(link).empty().append(newChild);
-            
-            } else if (child.tagName.toLowerCase() === 'img' && $(child).attr('src') === 'images/up.gif') {
-                var newChild = $('<i class="bi bi-arrow-up"></i>');
-                $(link).empty().append(newChild);
-            
-            } else if (child.tagName.toLowerCase() === 'img' && $(child).attr('src') === 'images/delete.gif') {
-                var newChild = $('<i class="bi bi-trash"></i>');
-                $(link).empty().append(newChild);
-            
-            }
-        });
-    });
 </script>
