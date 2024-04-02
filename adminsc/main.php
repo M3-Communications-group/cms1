@@ -18,25 +18,6 @@ if (isset($commit_result) && $_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// if (($action == 'edit' && !empty($_GET["editID"])) || $action == 'add') {
-//     echo '<h2>' . ucfirst($admin_texts[$lang][$action]) . '</h2>';
-//     echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
-// 			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
-//     $doonsubmit = '';
-//     if (!empty($edit_additional_stuff_top)) {
-//         echo "" . $edit_additional_stuff_top . "";
-//     }
-//     if (empty($custom_form)) {
-//     } else {
-//         echo $custom_form;
-//     }
-//     if (!empty($_GET["editID"])) {
-//         echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
-//     }
-//     if (!empty($edit_additional_stuff_bottom)) {
-//         echo additional_stuff();
-//     }
-// }
 
 if ($action == 'view') {
     if (!empty($view_additional_stuff_top)) {
@@ -52,45 +33,28 @@ if ($action == 'view') {
     }
 }
 ?>
-<script>
-    var rows = document.querySelectorAll('table tr:not(:first-child)');
-    rows.forEach(function(row) {
-        var link = row.cells[1].querySelector('a');
 
-        link.setAttribute('href', '#ModalEdit');
-        link.setAttribute('data-bs-toggle', 'modal');
-        link.setAttribute('data-bs-target', '#ModalEdit');
-
-
-
-
-    });
-</script>
-
-<a href="?admin_option=28&amp;start=view&amp;&amp;editID=1400&amp;action=edit"><img src="images/edit.gif" alt="" width="16" height="16" border="0"><img src="../uploads/galls_photos/1400_sjWC6t0Ux.jpg" border="0"></a>
-
-<!-- Modal Add-->
-<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+<!-- Modal Add -->
+<div class="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="ModalAddLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content px-1 py-2 px-5" style="min-width: 40vw">
             <div class="modal-header">
+                <h2 class="modal-title" id="ModalAddLabel">Add</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-
                 <?php
-                $action = 'add';
-                echo '<h2>Add</h2>';
-                echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
-			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
+
+                echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container">
+                    <tr>
+                        <td>
+                            <form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
                 $doonsubmit = '';
                 if (!empty($edit_additional_stuff_top)) {
                     echo "" . $edit_additional_stuff_top . "";
                 }
                 if (empty($custom_form)) {
                     foreach ($fields_to_manage as $key => $val) {
-
                         echo make_form_item($val, $current_item);
                     }
                 } else {
@@ -102,9 +66,7 @@ if ($action == 'view') {
                 if (!empty($edit_additional_stuff_bottom)) {
                     echo additional_stuff();
                 }
-                echo '
-		<script language="JavaScript">
-                    function content_doonsubmit(mmmyform) { 
+                echo ' <script language="JavaScript"> function content_doonsubmit(mmmyform) { 
                             ' . (!empty($doonsubmit) ? $doonsubmit : '') . ' 
                             ' . ((find_rte($fields_to_manage)) ? '
                             editor._textArea.value = editor.getHTML();
@@ -115,25 +77,12 @@ if ($action == 'view') {
                                     a[i]();
                                 }
                             }
-                        ' : '')
-                    . '
+                        ' : '') . '
                         mmmyform.submit();
                     } 
-                    
 		</script>';
-                echo '
-            <script>
-            var inputs = document.getElementsByTagName("input");
-            for (var i = 0; i < inputs.length; i++) {
-                inputs[i].classList.add("form-control");
-            }
-            
-        </script>
-        
-        ';
-                echo '<input type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit" class="btn btn-primary">';
+                echo '<input class="btn btn-primary" type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit">';
                 echo '</form></td></tr></table>';
-
 
                 ?>
             </div>
@@ -141,106 +90,67 @@ if ($action == 'view') {
     </div>
 </div>
 
-<!-- Modal Edit-->
-<div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="ModalEdit" aria-hidden="true">
-    <div class="modal-dialog">
-    <div class="modal-content px-1 py-2 px-5" style="width: fit-content;">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
 
-
-                <?php
-                $action = 'edit';
-                echo '<h2>Edit</h2>';
-                echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container"><tr><td>
-			<form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
-                $doonsubmit = '';
-                if (!empty($edit_additional_stuff_top)) {
-                    echo "" . $edit_additional_stuff_top . "";
-                }
-                if (empty($custom_form)) {
-                    foreach ($fields_to_manage as $key => $val) {
-
-                        echo make_form_item($val, $current_item);
-                    }
-                } else {
-                    echo $custom_form;
-                }
-                if (!empty($_GET["editID"])) {
-                    echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
-                }
-                if (!empty($edit_additional_stuff_bottom)) {
-                    echo additional_stuff();
-                }
-                echo '
-		<script language="JavaScript">
-                    function content_doonsubmit(mmmyform) { 
-                            ' . (!empty($doonsubmit) ? $doonsubmit : '') . ' 
-                            ' . ((find_rte($fields_to_manage)) ? '
-                            editor._textArea.value = editor.getHTML();
-                            var a = this.__msh_prevOnSubmit;
-                            // call previous submit methods if they were there.
-                            if (typeof a != "undefined") {
-                                for (var i = a.length; --i >= 0;) {
-                                    a[i]();
-                                }
-                            }
-                        ' : '')
-                    . '
-                        mmmyform.submit();
-                    } 
-                    
-		</script>';
-                echo '
-        <script>
-                var inputs = document.getElementsByTagName("input");
-                for (var i = 0; i < inputs.length; i++) {
-                    inputs[i].classList.add("form-control");
-                }
-               
-        </script>
-        ';
-                echo '<input type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit" class="btn btn-primary">';
-                echo '</form></td></tr></table>';
-
-
-                ?>
-<script>
-    function toggle_color(row) {
-        var td = row.getElementsByTagName('td')[4]; // Seleccionar el quinto td (índice 4)
-        var link = td.querySelector('a');
-
-        // Agregar las propiedades data-bs-toggle y data-bs-target al enlace
-        link.setAttribute('data-bs-toggle', 'modal');
-        link.setAttribute('data-bs-target', '#ModalEdit');
-
-        // Realizar acciones adicionales si es necesario
-    }
-</script>
-<script>
-    function toggle_color(row) {
-        var td = row.getElementsByTagName('td')[4]; // Seleccionar el quinto td (índice 4)
-        var link = td.querySelector('a');
-
-        // Agregar las propiedades data-bs-toggle y data-bs-target al enlace
-        link.setAttribute('data-bs-toggle', 'modal');
-        link.setAttribute('data-bs-target', '#ModalEdit');
-        link.removeAttribute('href');
-
-        // Mostrar el segundo modal
-        $('#ModalEdit').modal('show');
-    }
-</script>
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
+<!-- Edit Modals -->
 <?php
+$maxID = getMaxId($table);
+
+for ($i=0; $i < $maxID; $i++) { 
+    echo '<div class="modal fade" id="ModalEdit'. ($i + 1) .'" tabindex="-1" aria-labelledby="ModalEditLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content px-1 py-2 px-5" style="min-width: 40vw">
+            <div class="modal-header">
+                <h2 class="modal-title" id="ModalEditLabel">Edit</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">';
+                echo '<table border="0" cellpadding="0" cellspacing="0" id="main_form_container">
+                    <tr>
+                        <td>
+                            <form id="main" name="main" action="' . $_SERVER["PHP_SELF"] . $CURRENT_LOCATION . '" method="post" enctype="multipart/form-data" onsubmit="content_doonsubmit(this); return false;">';
+                $doonsubmit = '';
+                if (!empty($edit_additional_stuff_top)) {
+                    echo "" . $edit_additional_stuff_top . "";
+                }
+                if (empty($custom_form)) {
+                    foreach ($fields_to_manage as $key => $val) {
+                        echo make_form_item($val, $current_item);
+                    }
+                } else {
+                    echo $custom_form;
+                }
+                
+                echo '<input type="Hidden" value="' . ($i + 1) . '" name="editID">';
+                
+                if (!empty($edit_additional_stuff_bottom)) {
+                    echo additional_stuff();
+                }
+                echo ' <script language="JavaScript"> function content_doonsubmit(mmmyform) { 
+                            ' . (!empty($doonsubmit) ? $doonsubmit : '') . ' 
+                            ' . ((find_rte($fields_to_manage)) ? '
+                            editor._textArea.value = editor.getHTML();
+                            var a = this.__msh_prevOnSubmit;
+                            // call previous submit methods if they were there.
+                            if (typeof a != "undefined") {
+                                for (var i = a.length; --i >= 0;) {
+                                    a[i]();
+                                }
+                            }
+                        ' : '') . '
+                        mmmyform.submit();
+                    } 
+		</script>';
+                echo '<input class="btn btn-primary" type="Submit" value="' . $admin_texts[$lang]["save"] . '" id="submit">';
+                echo '</form></td></tr></table>';
+                echo '</div>
+                </div>
+            </div>
+        </div>';
+}
 
 require("inc/bottom.php");
+
+?>
+<script>
+    $('textarea').addClass('form-control');
+</script>

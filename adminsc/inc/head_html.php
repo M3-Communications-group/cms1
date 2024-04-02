@@ -3,10 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Calendar | Ubold - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Admin tool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="images\statehouse_crest.jpg">
@@ -333,6 +336,7 @@
 
         <!-- Calendar init -->
         <script src="assets/js/pages/calendar.init.js"></script>
+
 
 </body>
 

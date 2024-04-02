@@ -58,15 +58,15 @@ function make_menu($pid)
                 if ($row['has_children'] == 1) { // Lets create the sub menus
                     $menu_html .= '<div class="collapse" id="menu' . $row['id'] . '">';
                     $menu_html .=    '<ul class="sub-menu">';
-                
+
                     $myquery = 'select * from m3cms_sitemap where pid>0 and pid=' . $row['id'] . ' order by pid'; // Select all the children of the current parent
                     $myResult2 = query($myquery); // Run the Query
-                
+
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
                         $menu_html .= '<li class="menu-item ms-0">';
                         $menu_html .=    '<a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">';
-                
+
                         if (strlen($child['name']) > 20) {
                             $menu_html .= '<span class="menu-text" style="padding-left:15px">';
                             $words = explode(" ", $child['name']);
@@ -84,11 +84,11 @@ function make_menu($pid)
                         } else {
                             $menu_html .= '<span class="menu-text" style="padding-left:15px">' . $child['name'] . '</span>';
                         }
-                
+
                         $menu_html .= '</a>';
                         $menu_html .= '</li>';
                     }
-                
+
                     $menu_html .= '</ul>'; // Close sub-menu ul
                     $menu_html .= '</div>'; // Close collapse div
                 }
@@ -146,7 +146,9 @@ function locate_position($sitemap_id)
 
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
-                        $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+                        if ($_SERVER["PHP_SELF"] != '/new1-statehouse.gov.sc/public/adminsc/change_password.php') {
+                            $menu_viewadd .= '<div  class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a class="addLink" data-bs-toggle="modal" data-bs-target="#ModalAdd" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+                        }
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
@@ -374,15 +376,20 @@ function show_table_header($headers)
     echo '</tr>';
 }
 
+global $idTabla;
+$idTabla = 0;
 function show_table_row($row, $fields, $level, $img = 'spacer.gif')
 {
+    global $idTabla;
     reset($fields);
     echo '<tr onclick="toggle_color(this)">';
     foreach ($fields as $key => $val) {
-        echo '<td>' . (($key == 'Name' || $key == 'Име' || $key == 'Страница') ? str_repeat('<img src="images/' . $img . '" alt="" width="18" height="16" border="0" align="absmiddle">', $level) : '');
-        echo search_replace($val, $row);
+        echo '<td id=' . $row['id'] . '>' . (($key == 'Name' || $key == 'Име' || $key == 'Страница') ? str_repeat('<img src="images/' . $img . '" alt="" width="18" height="16" border="0" align="absmiddle">', $level) : '');
+        echo search_replace($val, $row, $img);
         echo '</td>';
     }
+    $idTabla++;
+
     echo '</td></tr>';
 }
 
@@ -427,7 +434,7 @@ function make_pages_list($all_count, $start, $limit)
     }
     $retval .= '
 		</div>
-		<div align="right" style="float: right; padding: 0px 50px 0px; ">' . $admin_texts[$lang]['total'] . ': <b>' . $all_count . '</b></div>
+		<div align="right" style="float: right; padding: 0px 50px 0px; "><label>' . $admin_texts[$lang]['total'] . ': </label><label class="totalCount">' . $all_count . '</label></div>
 	</div><div style="clear: both;"></div>';
     return $retval;
 }
@@ -442,7 +449,8 @@ function array_change_values(&$item2, $key, $row)
     $item2 = $row[$item2];
 }
 
-function search_replace($items, $values)
+
+function search_replace($items, $values, $img = null)
 {
     if (is_array($items)) {
         preg_match_all("/(###([-_a-zA-Z0-9]+)###)+/", $items[0], $regs);
@@ -463,6 +471,10 @@ function search_replace($items, $values)
             //echo "\$items = " . substr($items, 1) . ";";
             eval("\$items = " . substr($items, 1) . ";");
             //echo $items;
+        }
+        // Agregar clase solo a los enlaces que contienen 'action=edit'
+        if (strpos($items, 'action=edit') !== false) {
+            $items = preg_replace('/<a(.*?)href="([^"]*)"/', '<a$1class="editlink ' . $values['id'] . '" data-bs-toggle="modal" data-bs-target="#ModalEdit' . $values['id'] . '" ', $items);
         }
         return $items;
     }
@@ -532,9 +544,10 @@ function make_form_item($item, $values)
     if (!empty($item["title"]) && $item["type"] <> 'hidden' && $item["type"] <> 'timestamp' && empty($item["hidetitle"])) {
         $retval .= '<label>' . (!empty($item["required"]) ? "* " : "") . $item["title"] . '</label><br>';
     }
+
     switch ($item["type"]) {
         case "hidden":
-            $retval .= '<input type="Hidden" name="' . $item["name"] . '" ';
+            $retval .= '<input class="form-control" type="Hidden" name="' . $item["name"] . '" ';
             if (isset($values[$item["name"]])) {
                 $retval .= ' value="' . htmlspecialchars(stripslashes($values[$item["name"]]), ENT_QUOTES, $site_encoding) . '"';
             } else {
@@ -544,7 +557,7 @@ function make_form_item($item, $values)
             break;
 
         case "text":
-            $retval .= '<input type="Text" name="' . $item["name"] . '" ';
+            $retval .= '<input class="form-control" type="Text" name="' . $item["name"] . '" ';
             if (isset($values[$item["name"]])) {
                 $retval .= ' value="' . htmlspecialchars(stripslashes($values[$item["name"]]), ENT_QUOTES, $site_encoding) . '"';
             } else {
@@ -554,7 +567,7 @@ function make_form_item($item, $values)
             break;
 
         case "password":
-            $retval .= '<input type="Password" name="' . $item["name"] . '" ';
+            $retval .= '<input class="form-control" type="Password" name="' . $item["name"] . '" ';
             if (isset($values[$item["name"]])) {
                 $retval .= ' value="' . htmlspecialchars(stripslashes($values[$item["name"]]), ENT_QUOTES, $site_encoding) . '"';
             } else {
@@ -574,7 +587,7 @@ function make_form_item($item, $values)
             break;
 
         case "timestamp":
-            $retval .= '<input type="Hidden" name="' . $item["name"] . '" value="' . date("Y-m-d H:i:s") . '">';
+            $retval .= '<input class="form-control" type="Hidden" name="' . $item["name"] . '" value="' . date("Y-m-d H:i:s") . '">';
             break;
 
         case "date":
@@ -646,7 +659,7 @@ function make_form_item($item, $values)
             break;
 
         case "select":
-            $retval .= '<select name="' . $item["name"] . '">';
+            $retval .= '<select class="form-select" name="' . $item["name"] . '">';
             if ($item["required"] <> 1) {
                 $retval .= '<option value="' . $item["default_value"] . '">Select...</option>';
             }
@@ -665,7 +678,7 @@ function make_form_item($item, $values)
             $retval .= '</select><br>';
             break;
         case "select_tree":
-            $retval .= '<select name="' . $item["name"] . '"' . ((isset($item["dependency"])) ? ' onchange="make_dependency(this[this.selectedIndex], \'' . $item["dependency"]["name"] . '\')"' : '') . '>';
+            $retval .= '<select class="form-select" name="' . $item["name"] . '"' . ((isset($item["dependency"])) ? ' onchange="make_dependency(this[this.selectedIndex], \'' . $item["dependency"]["name"] . '\')"' : '') . '>';
             if ($item["required"] <> 1) {
                 $retval .= '<option value="' . $item["default_value"] . '">Select...</option>';
             }
@@ -707,7 +720,7 @@ function make_form_item($item, $values)
             }
             break;
         case "dbselect":
-            $retval .= '<select name="' . $item["name"] . '" id="' . $item["name"] . '" ' . (!empty($item["add_html"]) ? $item["add_html"] : '') . '>';
+            $retval .= '<select class="form-select" name="' . $item["name"] . '" id="' . $item["name"] . '" ' . (!empty($item["add_html"]) ? $item["add_html"] : '') . '>';
             if ($item["required"] <> 1) {
                 $retval .= '<option value="' . $item["default_value"] . '">' . $admin_texts[$lang]['select'] . '...</option>';
             }
@@ -733,7 +746,7 @@ function make_form_item($item, $values)
             $retval .= '</select><br>';
             break;
         case "dbselect_tree":
-            $retval .= '<select name="' . $item["name"] . '">';
+            $retval .= '<select class="form-select" name="' . $item["name"] . '">';
             if ($item["required"] <> 1) {
                 $retval .= '<option value="' . $item["default_value"] . '">' . $admin_texts[$lang]['select'] . '...</option>';
             }
@@ -755,7 +768,7 @@ function make_form_item($item, $values)
             reset($myvalues);
             $tmp = 0;
             foreach ($myvalues as $key => $val) {
-                $retval .= '<input type="Checkbox" name="' . $item["name"] . '[]" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
+                $retval .= '<input class="btn-check" type="Checkbox" name="' . $item["name"] . '[]" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
                 if (in_array($key, $select_options)) {
                     $retval .= "checked";
                     $tmp = 1;
@@ -784,7 +797,7 @@ function make_form_item($item, $values)
             reset($myvalues);
             $tmp = 0;
             foreach ($myvalues as $key => $val) {
-                $retval .= '<input type="Checkbox" name="' . $item["name"] . '[]" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
+                $retval .= '<input class="btn-check" type="Checkbox" name="' . $item["name"] . '[]" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
                 if (in_array($key, $select_options)) {
                     $retval .= "checked";
                     $tmp = 1;
@@ -797,7 +810,7 @@ function make_form_item($item, $values)
             break;
         case "select_dbmultiple":
             // get ids and corresponding values
-            $retval .= '<select name="' . $item["name"] . '[]" multiple size="5">';
+            $retval .= '<select class="form-select" name="' . $item["name"] . '[]" multiple size="5">';
 
             $myvalues = array();
             $MyResult = query($item["select_list"]);
@@ -815,7 +828,7 @@ function make_form_item($item, $values)
             reset($myvalues);
             $tmp = 0;
             foreach ($myvalues as $key => $val) {
-                $retval .= '<option value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
+                $retval .= '<option class="form-option" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
                 if (in_array($key, $select_options)) {
                     $retval .= "selected";
                     $tmp = 1;
@@ -845,7 +858,7 @@ function make_form_item($item, $values)
             reset($myvalues);
             $tmp = 0;
             foreach ($myvalues as $key => $val) {
-                $retval .= '<input type="Checkbox" name="' . $item["name"] . '[]" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
+                $retval .= '<input class="form-select" type="Checkbox" name="' . $item["name"] . '[]" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
                 if (in_array($key, $select_options)) {
                     $retval .= "checked";
                     $tmp = 1;
@@ -858,7 +871,7 @@ function make_form_item($item, $values)
             break;
         case "select_dbmultiple_ext_table":
             // get ids and corresponding values
-            $retval .= '<select name="' . $item["name"] . '[]" multiple size="5">';
+            $retval .= '<select class="form-select" name="' . $item["name"] . '[]" multiple size="5">';
 
             $myvalues = array();
             $MyResult = query($item["select_list"]);
@@ -876,7 +889,7 @@ function make_form_item($item, $values)
             reset($myvalues);
             $tmp = 0;
             foreach ($myvalues as $key => $val) {
-                $retval .= '<option value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
+                $retval .= '<option class="form-option" value="' . htmlspecialchars(stripslashes($key), ENT_QUOTES, $site_encoding) . '" ';
                 if (in_array($key, $select_options)) {
                     $retval .= "selected";
                     $tmp = 1;
@@ -896,7 +909,7 @@ function make_form_item($item, $values)
                 //}
                 echo '<br><img style="width:auto; max-width:300px" src="' . (isset($item["path"]) ? $item["path"] : "../") . $img_path . '" border="0" alt="" style="border: 1px solid #000000;"><input type="Checkbox" name="files_delete[' . $item["name"] . ']" value="1" style="width: auto;" id="check_' . $item["name"] . '"><label for="check_' . $item["name"] . '"> ' . $admin_texts[$lang]['delete_image'] . '</label><br>';
             }
-            $retval .= '<input type="File" name="' . $item["name"] . '">';
+            $retval .= '<input class="form-control" type="File" name="' . $item["name"] . '">';
             if (!empty($values[$item["name"]])) {
                 //				$retval .= $values[$item["name"]];
             }
@@ -907,7 +920,7 @@ function make_form_item($item, $values)
                 $retval .= '<a href="' . (isset($item["path"]) ? $item["path"] : "../") . $values[$item["name"]] . '" target="_blank">' . round(filesize((isset($item["path"]) ? $item["path"] : "../") . $values[$item["name"]]) / 1024) . ' KB</a><input type="Checkbox" name="files_delete[' . $item["name"] . ']" value="1" style="width: auto;"> ' . $admin_texts[$lang]['delete'] . '<br>';
                 $retval .= $values[$item["name"]] . "<br>";
             }
-            $retval .= '<input type="File" name="' . $item["name"] . '">';
+            $retval .= '<input class="form-control" type="File" name="' . $item["name"] . '">';
             $retval .= '<br>';
             break;
 
@@ -1712,4 +1725,14 @@ function getRandomString($lenght = NULL, $api = FALSE)
         $string .= $characters[mt_rand(0, strlen($characters) - 1)];
     }
     return $string;
+}
+
+function getMaxId($table)
+{
+    $myquery = "SELECT MAX(id) AS max_id FROM `$table`";
+    $myResult = query($myquery); //Run the Query
+
+    $row = mysqli_fetch_array($myResult);
+
+    return $row['max_id'];
 }
