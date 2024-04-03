@@ -1,6 +1,6 @@
 <?php
 
-require("inc/head.php");
+require(__DIR__ . "/inc/head.php");
 
 
 
@@ -11,10 +11,8 @@ if (isset($commit_result) && $_SERVER["REQUEST_METHOD"] == "POST") {
             eval($table . "_additional(" . $commit_result[1] . ");");
         }
         echo '<div class="success">' . $admin_texts[$lang]["success"] . '</div>';
-    } else {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            echo '<div class="err">' . $commit_result[1] . '</div>';
-        }
+    } elseif ($_SERVER["REQUEST_METHOD"] == "POST") {
+        echo '<div class="err">' . $commit_result[1] . '</div>';
     }
 }
 
@@ -25,11 +23,7 @@ if ($action == 'view') {
     }
     if (count($fields_to_show) > 0) {
         $start = filter_input(INPUT_GET, 'start', FILTER_VALIDATE_INT, ['options' => ['default' => 0, 'min_range' => 1]]);
-        sitemap($table, $fields_to_show, $pid, 0, $fields_to_show, $fields_showorder, $start, $custom_limit, $sub_pid, $fields_to_show_join, $fields_to_select, (!empty($custom_where) ? $custom_where : ""), (!empty($group_by) ? $group_by : ""), (!empty($show_sum) ? $show_sum : ""));
-    }
-
-    if (!empty($view_additional_stuff_bottom)) {
-        echo additional_stuff_view();
+        sitemap($table, $fields_to_show, $pid, 0, $fields_to_show, $fields_showorder, $start, $custom_limit, $sub_pid, $fields_to_show_join, $fields_to_select, (empty($custom_where) ? "" : $custom_where), (empty($group_by) ? "" : $group_by), (empty($show_sum) ? "" : $show_sum));
     }
 }
 ?>
@@ -53,7 +47,7 @@ if ($action == 'view') {
                     echo "" . $edit_additional_stuff_top . "";
                 }
                 if (empty($custom_form)) {
-                    foreach ($fields_to_manage as $key => $val) {
+                    foreach ($fields_to_manage as $val) {
                         echo make_form_item($val, $current_item);
                     }
                 } else {
@@ -62,11 +56,8 @@ if ($action == 'view') {
                 if (!empty($_GET["editID"])) {
                     echo '<input type="Hidden" value="' . $_GET["editID"] . '" name="editID">';
                 }
-                if (!empty($edit_additional_stuff_bottom)) {
-                    echo additional_stuff();
-                }
                 echo ' <script language="JavaScript"> function content_doonsubmit(mmmyform) { 
-                            ' . (!empty($doonsubmit) ? $doonsubmit : '') . ' 
+                            ' . ($doonsubmit === '' || $doonsubmit === '0' ? '' : $doonsubmit) . ' 
                             ' . ((find_rte($fields_to_manage)) ? '
                             editor._textArea.value = editor.getHTML();
                             var a = this.__msh_prevOnSubmit;
@@ -112,7 +103,7 @@ for ($i = 0; $i < $maxID; $i++) {
         echo "" . $edit_additional_stuff_top . "";
     }
     if (empty($custom_form)) {
-        foreach ($fields_to_manage as $key => $val) {
+        foreach ($fields_to_manage as $val) {
             echo make_form_item($val, $current_item);
         }
     } else {
@@ -121,11 +112,8 @@ for ($i = 0; $i < $maxID; $i++) {
 
     echo '<input type="Hidden" value="' . ($i + 1) . '" name="editID">';
 
-    if (!empty($edit_additional_stuff_bottom)) {
-        echo additional_stuff();
-    }
     echo ' <script language="JavaScript"> function content_doonsubmit(mmmyform) { 
-                            ' . (!empty($doonsubmit) ? $doonsubmit : '') . ' 
+                            ' . ($doonsubmit === '' || $doonsubmit === '0' ? '' : $doonsubmit) . ' 
                             ' . ((find_rte($fields_to_manage)) ? '
                             editor._textArea.value = editor.getHTML();
                             var a = this.__msh_prevOnSubmit;
@@ -147,10 +135,11 @@ for ($i = 0; $i < $maxID; $i++) {
         </div>';
 }
 
-require("inc/bottom.php");
+require(__DIR__ . "/inc/bottom.php");
 
 ?>
 <script>
     $('textarea').addClass('form-control');
-
+    $('input').addClass('form-control');
+    $('select').addClass('form-select');
 </script>

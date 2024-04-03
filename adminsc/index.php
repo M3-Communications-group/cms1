@@ -1,7 +1,7 @@
 <?php
-require("inc/head_operations.php");
+require(__DIR__ . "/inc/head_operations.php");
 
-if ($_SESSION['m3cms']["user_id"] > 0) { /// влезнал си бе, чичо ...
+if ($_SESSION['m3cms']["user_id"] > 0) { 
     mysqli_close($sqlConn);
     header("Location: main.php");
     die();

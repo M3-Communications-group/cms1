@@ -34,22 +34,20 @@ function make_menu($pid)
                 <path d="M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659"/>
               </svg>';
 
-
-
                 $menu_html .=    '</a>';
 
                 if ($row['has_children'] == 1) { // Lets create the sub menus
                     $menu_html .= '<div class="collapse" id="menu' . $row['id'] . '">';
                     $menu_html .=    '<ul class="sub-menu">';
-                
+
                     $myquery = 'select * from m3cms_sitemap where pid>0 and pid=' . $row['id'] . ' order by pid'; // Select all the children of the current parent
                     $myResult2 = query($myquery); // Run the Query
-                
+
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
                         $menu_html .= '<li class="menu-item ms-0">';
                         $menu_html .=    '<a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">';
-                
+
                         if (strlen($child['name']) > 20) {
                             $menu_html .= '<span class="menu-text" style="padding-left:15px">';
                             $words = explode(" ", $child['name']);
@@ -67,11 +65,11 @@ function make_menu($pid)
                         } else {
                             $menu_html .= '<span class="menu-text" style="padding-left:15px">' . $child['name'] . '</span>';
                         }
-                
+
                         $menu_html .= '</a>';
                         $menu_html .= '</li>';
                     }
-                
+
                     $menu_html .= '</ul>'; // Close sub-menu ul
                     $menu_html .= '</div>'; // Close collapse div
                 }
@@ -130,7 +128,8 @@ function locate_position($sitemap_id)
                 if (!empty($row["content_table"]) && $row["id"] == $admin_option) { // ako tova e izbranoto 
                     if ($row["perm_add"] > 0) {
                         if ($_SERVER["PHP_SELF"] != '/new1-statehouse.gov.sc/public/adminsc/change_password.php') {
-                            $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a class="addLink" data-bs-toggle="modal" data-bs-target="#Modal" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';}
+                            $menu_viewadd .= '<div class="menu_lvl_viewadd' . (($action == 'add') ? "_active" : "") . '"><a class="addLink" data-bs-toggle="modal" data-bs-target="#ModalAdd" href="' . $row["filename"] . '?admin_option=' . $admin_option . '&action=add&table=' . $table_categories . '&pid=' . $pid . (!empty($_GET["hide_nav"]) ? "&hide_nav=1" : "") . (!empty($_GET["common_sense"]) ? "&common_sense=1" : "") . '">' . $admin_texts[$lang]["add"] . '</a></div>';
+                        }
                     }
                     $table = $row["content_table"];
                     $table_categories = $row["table_categories"];
@@ -173,14 +172,6 @@ function sitemap_fancy($table, $pid, $level, $fields, $showorder, $parent_is_las
     if (!check_field_exists($table, $showorder)) {
         $showorder = 'id';
     }
-    /*
-      if(check_field_exists($table, "active")) {
-      if(!empty($where)) {
-      $where .= 'and ';
-      }
-      $where .= " active = '1'";
-      }
-     */
     if (!empty($where)) {
         $where = " where $where ";
     }
@@ -323,8 +314,6 @@ function sitemap($table, $fields_to_show, $pid, $level, $fields, $showorder, $st
     }
 
     $myquery = "select $fields_to_select from `$table` $fields_to_show_join $where $group order by $order_clause limit $start, $limit";
-    //debugme($myquery);
-    //echo $myquery;
     $MyResult = query($myquery);
     while ($row = mysqli_fetch_array($MyResult)) {
         show_table_row($row, $fields, $level);
@@ -511,9 +500,6 @@ function showordermove($id, $table, $move, $showorderfield = 'showorder')
     return true;
 }
 
-function delid($id, $table)
-{
-}
 
 function make_form_item($item, $values)
 {
@@ -920,7 +906,7 @@ function make_form_item($item, $values)
 
 function commit($fields_to_manage, $table)
 {
-    global $arr_allow_file_types, $admin_texts, $lang;
+    global $admin_texts, $lang;
 
     $err = '';
 
@@ -966,12 +952,13 @@ function commit($fields_to_manage, $table)
             }
             switch ($item["check_type"]) {
                 case "text_nohtml":
-                    if (preg_match("/(<\/?)(\w+)([^>]*>)/", $_POST[$item["name"]])) {
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && strip_tags($_POST[$item["name"]]) === $_POST[$item["name"]]) {
+                    } else {
                         $err .= "" . $admin_texts[$lang]["is_invalid"] . " " . $item["title"] . "<br>";
                     }
                     break;
                 case "text_html":
-                    if (preg_match("/(\<object|\<embed|\<style|\<script|\<\!\-\-|\-\-\>)/", $_POST[$item["name"]])) {
+                    if (@preg_match("/(\<object|\<embed|\<style|\<script|\<\!\-\-|\-\-\>)/", $_POST[$item["name"]])) {
                         $err .= "" . $admin_texts[$lang]["is_invalid"] . " " . $item["title"] . "<br>";
                     }
                     break;
@@ -1009,26 +996,23 @@ function commit($fields_to_manage, $table)
             }
             if (!empty($item["check_value"]) && !empty($_POST[$item["name"]])) {
                 if (substr($item["check_value"], 0, 1) == '/') {
-                    if (!preg_match('/' . preg_replace("'", "\'", $item["check_value"]) . '/', $_POST[$item["name"]])) {
-                        //echo $item["check_value"] . '<br>' . $_POST[$item["name"]] . '<br>';
+                    if (!preg_match('/' . preg_quote($item["check_value"], '/') . '/', $_POST[$item["name"]])) {
                         $err .= "" . $admin_texts[$lang]["is_invalid"] . " " . $item["title"] . "<br>";
                     }
                 } else {
-                    $pattern = '/^' . $item["check_value"] . '$/';
+                    $pattern = '/^' . preg_quote($item["check_value"], '/') . '$/';
                     if (!preg_match($pattern, $_POST[$item["name"]])) {
-                        //echo $item["check_value"] . '<br>' . $_POST[$item["name"]] . '<br>';
                         $err .= "" . $admin_texts[$lang]["is_invalid"] . " " . $item["title"] . "<br>";
                     }
                 }
             }
 
-            if (is_array($_POST[$item["name"]])) {
+            if (@is_array($_POST[$item["name"]])) {
 
                 $tmp3 = '';
                 foreach ($_POST[$item["name"]] as $tmp1 => $tmp2) {
                     $tmp3 .= $tmp2 . "|";
                 }
-                //				$tmp3 = substr($tmp3, 0, -1);
                 if (!empty($tmp3)) {
                     $tmp3 = "|" . $tmp3;
                 }
@@ -1056,7 +1040,7 @@ function commit($fields_to_manage, $table)
                         $myquery_exec_later[$item["external_table"]] .= ", `" . $item["name"] . "` = '" . $_POST[$item["name"]] . "'";
                     }
                 } else {
-                    $myquery .= "`" . $item["name"] . "` = " . (($_POST[$item["name"]] === 'NULL') ? "NULL" : "'" . $_POST[$item["name"]] . "'") . ", ";
+                    @$myquery .= "`" . @$item["name"] . "` = " . (($_POST[@$item["name"]] === 'NULL') ? "NULL" : "'" . @$_POST[$item["name"]] . "'") . ", ";
                 }
             }
         } elseif ($item["type"] == 'auto') {
@@ -1069,13 +1053,13 @@ function commit($fields_to_manage, $table)
                 $err .= check_file_extension($_FILES[$item["name"]]["name"], $item);
 
                 if ($extension == 'zip') {
-                    $zip = zip_open($_FILES[$item["name"]]["tmp_name"]);
-
-                    if (is_resource($zip)) {
-                        while ($zip_entry = zip_read($zip)) {
-                            $err .= check_file_extension(zip_entry_name($zip_entry), $item, strtoupper($extension) . ' ERROR: ');
+                    $zip = new ZipArchive;
+                    if ($zip->open($_FILES[$item["name"]]["tmp_name"]) === true) {
+                        for ($i = 0; $i < $zip->numFiles; $i++) {
+                            $filename = $zip->getNameIndex($i);
+                            $err .= check_file_extension($filename, $item, strtoupper($extension) . ' ERROR: ');
                         }
-                        zip_close($zip);
+                        $zip->close();
                     } else {
                         $err .= strtoupper($extension) . ' ' . $admin_texts[$lang]["archive_open_failed"];
                     }
@@ -1140,11 +1124,11 @@ function commit($fields_to_manage, $table)
 
     if (array_key_exists('showorder', $auto)) {
         if (!$id) {
-            if ($auto['showorder'] !== true) { //ако не сме сетанли reverse = true
+            if ($auto['showorder'] !== true) { //If reverse = true is not set
                 $myquery1 = "select max(showorder) from `$table` ";
                 //if(in_array('level', $auto)) {
                 if (check_field_exists($table, 'pid')) {
-                    $myquery1 .= " where pid = '" . $_POST["pid"] . "'";
+                    $myquery1 .= " where pid = '" . @$_POST["pid"] . "'";
                 }
                 $MyResult1 = query($myquery1);
                 $row1 = mysqli_fetch_row($MyResult1);
@@ -1189,7 +1173,6 @@ function commit($fields_to_manage, $table)
         } else {
             $myquery = "insert into `$table` set $myquery";
         }
-        //echo $myquery . "<br>";
 
         $MyResult = query($myquery);
 
@@ -1276,7 +1259,6 @@ function commit($fields_to_manage, $table)
                 if (!empty($item["keep_orig_name"])) {
                     $copyURL = $item["upload_dir"] . "/" . $_FILES[$item["name"]]["name"];
                 } else {
-                    //$copyURL = $item["upload_dir"] . "/" . $item["name"] . "_$id.$extension";
                     $copyURL = $item["upload_dir"] . "/" . $id . '_' . getRandomString(8) . "." . $extension;
                 }
 
@@ -1310,12 +1292,9 @@ function commit($fields_to_manage, $table)
 
                     foreach ($item["auto_images"] as $not_important => $auto_image) {
                         /*
-                         * ако искаме името да е едно тук трябва да го правим
-                         */
-                        //$newfilename = $id . '_' . getRandomString(8);
-                        //if (preg_match('/[0-9]+/', $img_params[0], $m)) {
-                        //    $newfilename .= '_' . $m[0];
-                        //}
+                        * If we want the name to be one, we need to do it here
+                        */
+
                         if ($extension == 'jpg' || $extension == 'jpeg') {
                             $im_src = imagecreatefromjpeg($copyDIR . $copyURL);
                         } elseif ($extension == 'gif') {
@@ -1326,7 +1305,7 @@ function commit($fields_to_manage, $table)
                             break;
                         }
                         $img_src_size = getimagesize($copyDIR . $copyURL);
-                        // [0] -> name, [1] -> width, [2] -> height, [3] -> propotion, [4] -> writesize, [5] -> optional-olny-if-size-allows, [6] -> 0: just resize; 1: crop; 2: resize and toggle width/height if portrait; 3: crop bez riazane a chrez dobaviane na prazno mqsto; 4: resize without messing up the propotion - width and height are maximum values, [7] -> watermark
+                        
                         $img_params = explode("|", $auto_image);
                         $src_propotion = $img_src_size[0] / $img_src_size[1];
 
@@ -1380,20 +1359,20 @@ function commit($fields_to_manage, $table)
                                 $desired_height = $img_params[2];
                                 $cropped_x = 0;
                                 $cropped_y = 0;
-                                // ako nishto ne stane, neka se namachka, pa kfoto shte da stava
+                                // If nothing happens, let it be scratched, then the photo will be taken
                                 $cropped_width = $img_src_size[0];
                                 $cropped_height = $img_src_size[1];
                                 // start
                                 $desired_propotion = $new_width / $new_height;
-                                //echo 'D: ' . $desired_propotion . " O: " . $src_propotion . " ";
-                                if ($src_propotion < $desired_propotion) { // shte se crop-va po shirochina
-                                    $cropped_height = round($img_src_size[0] / $desired_propotion); // novata visochina = shirochina / iskana proporcia
-                                    $cropped_y = ($img_src_size[1] - $cropped_height) / 2; // da hvane sredata
+                                
+                                if ($src_propotion < $desired_propotion) { // The width will be cropped
+                                    $cropped_height = round($img_src_size[0] / $desired_propotion); // The new height equals the width divided by the desired aspect ratio
+                                    $cropped_y = ($img_src_size[1] - $cropped_height) / 2; // To catch the middle
                                 } else { // shte crop-vam po visochina
-                                    $cropped_width = round($img_src_size[1] * $desired_propotion); // novata shirochina = visochina * iskana proporcia
-                                    $cropped_x = ($img_src_size[0] - $cropped_width) / 2; // da hvane sredata
+                                    $cropped_width = round($img_src_size[1] * $desired_propotion); // The new width equals the height multiplied by the desired aspect ratio.
+                                    $cropped_x = ($img_src_size[0] - $cropped_width) / 2; // to catch the middle
                                 }
-                                //echo 'W: ' . $cropped_width . " H: " . $cropped_height . ' X: ' . $cropped_x . " Y: " . $cropped_y;
+                                
                                 $im_cropped = imagecreatetruecolor($cropped_width, $cropped_height);
                                 imagecopy($im_cropped, $im_src, 0, 0, $cropped_x, $cropped_y, $cropped_width, $cropped_height);
                                 imagecopyresampled($im_dst, $im_cropped, 0, 0, 0, 0, $new_width, $new_height, $cropped_width, $cropped_height);
@@ -1401,21 +1380,20 @@ function commit($fields_to_manage, $table)
                                 // default values
                                 $cropped_x = 0;
                                 $cropped_y = 0;
-                                // ako nishto ne stane, neka se namachka, pa kfoto shte da stava
+                                // If nothing happens, let it be scratched, then the photo will be taken
                                 $cropped_width = $img_src_size[0];
                                 $cropped_height = $img_src_size[1];
                                 // start
                                 $desired_propotion = $new_width / $new_height;
-                                //echo "new_width/new_height: $new_width/$new_height <br>";
-                                //echo 'D: ' . $desired_propotion . " O: " . $src_propotion . " ";
-                                if ($src_propotion < $desired_propotion) { // shte se resizene po shirochina i shte se dobavi space na visochnina // vmesto da: crop-va po shirochina
-                                    $cropped_width = round($img_src_size[1] * $desired_propotion); // novata shirochina = visochina * iskana proporcia
-                                    $cropped_x = ($cropped_width - $img_src_size[0]) / 2; // da hvane sredata
-                                } else { // 
-                                    $cropped_height = round($img_src_size[0] / $desired_propotion); // novata visochina = shirochina / iskana proporcia
-                                    $cropped_y = ($cropped_height - $img_src_size[1]) / 2; // da hvane sredata
+                                
+                                if ($src_propotion < $desired_propotion) { // The resizing will be done by width, and space will be added to the height // instead of cropping by width
+                                    $cropped_width = round($img_src_size[1] * $desired_propotion); // The new width equals the height multiplied by the desired aspect ratio
+                                    $cropped_x = ($cropped_width - $img_src_size[0]) / 2; // do catch the middle
+                                } else { 
+                                    $cropped_height = round($img_src_size[0] / $desired_propotion); // The new height equals the width divided by the desired aspect ratio
+                                    $cropped_y = ($cropped_height - $img_src_size[1]) / 2; // to catch the middle
                                 }
-                                //echo 'W: ' . $cropped_width . " H: " . $cropped_height . ' X: ' . $cropped_x . " Y: " . $cropped_y . "<br>";
+                                
                                 $im_cropped = imagecreatetruecolor($cropped_width, $cropped_height);
                                 $bgcolor = imagecolorat($im_src, 1, 1);
                                 imagefilledrectangle($im_cropped, 0, 0, $cropped_width, $cropped_height, $bgcolor);
@@ -1449,7 +1427,7 @@ function commit($fields_to_manage, $table)
                             }
 
                             /*
-                             * ако искаме името да е различно за всяка картинка
+                             * If we want the name to be different for each picture
                              */
                             $newfilename = $id . '_' . getRandomString(8);
                             if (preg_match('/[0-9]+/', $img_params[0], $m)) {
@@ -1468,32 +1446,9 @@ function commit($fields_to_manage, $table)
                                 $my3query .= "`" . $img_params[0] . "x` = '" . $new_width . "', `" . $img_params[0] . "y` = '" . $new_height . "'";
                             }
                             $my3query .= " where id = '$id'";
-                            //echo $my3query;
+
                             $My3Result = query($my3query);
                         }
-                    }
-                }
-            } else {
-                if (!empty($_FILES[$item["name"]]["error"])) {
-                    switch ($_FILES[$item["name"]]["error"]) {
-                        case 0: //no error; possible file attack!
-                            //$err .= "������� � ��������� �� �����";
-                            break;
-                        case 1: //
-                            //$err .= "uploaded file exceeds the upload_max_filesize directive in php.ini";
-                            break;
-                        case 2: //
-                            //$err .= "uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the html form";
-                            break;
-                        case 3: //
-                            //$err .= "uploaded file was only partially uploaded";
-                            break;
-                        case 4: //
-                            // echo "no file was uploaded";
-                            break;
-                        default: //a default error, just in case!  :)
-                            // $err .= "There was a problem with your upload.";
-                            break;
                     }
                 }
             }
@@ -1522,7 +1477,6 @@ function content_fix_lvl_chld($table, $pid, $level)
         $myquery .= ", has_children = '1' ";
     }
     $myquery .= " where id = '$pid'";
-    //	echo $myquery . "<br>";
     query($myquery);
     while ($row = mysqli_fetch_array($MyResult)) {
         content_fix_lvl_chld($table, $row["id"], $level + 1);
@@ -1544,7 +1498,6 @@ function content_fix_showorder($table, $pid)
             $i = 1;
             while ($row = mysqli_fetch_array($MyResult)) {
                 $myquery = "update `$table` set showorder = '$i' where id = '" . $row["id"] . "'";
-                // echo $myquery . "<br>";
                 query($myquery);
                 $i++;
             }
@@ -1599,10 +1552,10 @@ function dbselect_tree_options($myquery, $item, $values, $sub_pid, $pid, &$tmp)
             $tmp = 1;
         }
 
-        $retval .= '>' . str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $row["level"]) . htmlspecialchars((empty($row[1]) ? $row[0] : $row[1]), ENT_QUOTES, $site_encoding) . '</option>';
-        if ($row["has_children"] > 0 && preg_match("/(pid)( ?)(=)( ?)(')([0-9]+)(')/", $myquery, $regs)) {
+        $retval .= '>' . @str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", @$row["level"]) . htmlspecialchars((empty($row[1]) ? $row[0] : $row[1]), ENT_QUOTES, $site_encoding) . '</option>';
+        if (@$row["has_children"] > 0 && @preg_match("/(pid)( ?)(=)( ?)(')([0-9]+)(')/", $myquery, $regs)) {
             $myquery = preg_replace("/(pid)( ?)(=)( ?)(')([0-9]+)(')/", $regs[1] . $regs[2] . $regs[3] . $regs[4] . $regs[5] . $row["id"] . $regs[7], $myquery);
-            //$retval .= '<option value="">' . $myquery . '</option>';
+
             $retval .= dbselect_tree_options($myquery, $item, $values, $sub_pid, $pid, $tmp);
         }
     }
@@ -1615,10 +1568,6 @@ function write_fcontent($key, $fcontent, $ext = "html")
     $fp = fopen($filename, "w");
     fwrite($fp, $fcontent);
     fclose($fp);
-}
-
-function generate_static_html()
-{
 }
 
 function update_related($article_id)
@@ -1641,10 +1590,17 @@ function check_user_permission($category_id, $type)
         return 1;
     }
 
-    $myquery = "select * from m3cms_access left join m3cms_sitemap on m3cms_access.sitemap_id = m3cms_sitemap.id where m3cms_access.group_id = '" . $_SESSION['m3cms']["group_id"] . "' and m3cms_sitemap.id = '$category_id'";
-    $MyResult = query($myquery);
-    while ($row = mysqli_fetch_array($MyResult)) {
-        return ($row[$type]);
+    global $sqlConn; 
+
+    $myquery = "SELECT * FROM m3cms_access LEFT JOIN m3cms_sitemap ON m3cms_access.sitemap_id = m3cms_sitemap.id WHERE m3cms_access.group_id = ? AND m3cms_sitemap.id = ?";
+    $stmt = mysqli_prepare($sqlConn, $myquery);
+    mysqli_stmt_bind_param($stmt, "ii", $_SESSION['m3cms']["group_id"], $category_id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        return $row[$type];
     }
 
     return 0;
@@ -1688,7 +1644,6 @@ function getRandomString($lenght = NULL, $api = FALSE)
     } else {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     }
-    //$pool = str_split($characters);
     $string = '';
     $options = [
         "options" => [

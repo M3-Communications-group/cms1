@@ -1,22 +1,21 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
-require "inc/functions_site.php";
-require "inc/functions_cms.php";
-require('inc/mysql_connect.php');
+require __DIR__ . "/inc/functions_site.php";
+require __DIR__ . "/inc/functions_cms.php";
+require(__DIR__ . '/inc/mysql_connect.php');
 ini_set("display_errors", 1);
 ini_set('max_execution_time', 180); //240 seconds = 4 minutes
 
-require 'inc/PHPMailer6/src/Exception.php';
-require 'inc/PHPMailer6/src/PHPMailer.php';
-require 'inc/PHPMailer6/src/SMTP.php';
+require __DIR__ . '/inc/PHPMailer6/src/Exception.php';
+require __DIR__ . '/inc/PHPMailer6/src/PHPMailer.php';
+require __DIR__ . '/inc/PHPMailer6/src/SMTP.php';
 
 
 $query = "select * from `newsalert` where sent_mail = 0 order by id limit 13";
 
-$result = query($query);
+$result = mysqli_query($sqlConn, $query);
 $sent_count = 0;
 $error_count = 0;
 $error_info = '';
@@ -25,11 +24,10 @@ while ($arr = mysqli_fetch_array($result)) {
 
     $content_html = "";
     $content_text = "";
-    $q2 = 'select *, date_format(date, "%a, %d %M %Y") as mydate from m3site_news where id="' . $arr['news_id'] . '" and active = 1';
-    $r2 = query($q2);
+    $q2 = 'SELECT *, date_format(date, "%a, %d %M %Y") AS mydate FROM m3site_news WHERE id="' . $arr['news_id'] . '" AND active = 1';
+    $r2 = mysqli_query($sqlConn, $q2);
     
     if (mysqli_num_rows($r2) > 0) {
-
 
         $arr2 = mysqli_fetch_array($r2);
         $content_html .= '<font color="#1682A3" size="+1"><b>' . $arr2["title"] . "</b></font><br><br>\n";
@@ -46,14 +44,14 @@ while ($arr = mysqli_fetch_array($result)) {
 
         $content_html .= $arr2["mydate"] . "<br>\n";
         $content_html .= $arr2["text"] . "<br><div style=\"clear: both;\"></div>\n";
-        $content_text .= striphtml($arr2["text"]) . "\n\n";
+        $content_text .= strip_tags($arr2["text"]) . "\n\n";
 
         $unsub_html = '<br><hr><FONT face="Verdana, Arial, Hevetica, sans-serif" size="1" style="font-size: 10px;" color="#000000">For media enquiries please contact Nadine Jack on <a href="mailto:n.jack@statehouse.gov.sc">n.jack@statehouse.gov.sc</a>' . $big_photo_html . '<br><br>This message is sent to you, because you are registered for news from www.statehouse.gov.sc<br>To unsubscribe, <a href="http://www.statehouse.gov.sc/newsalert/request-unsubscribe" target="_blank" style="color: #000000; text-decoration: underline;">click here</a>.</font>';
         $unsub_text = "\n\nFor media enquiries please contact Nadine Jack on n.jack@statehouse.gov.sc" . $big_photo_txt . "\n\nThis message is sent to you, because you are registered for news from www.statehouse.gov.sc\nTo unsubscribe, visit:\nhttp://www.statehouse.gov.sc/newsalert/request-unsubscribe\n\n";
 
         $new_content_html = implode("", file(__DIR__ . "../../../resources/email/newsalert_top.php")) . $content_html . $unsub_html . implode("", file(__DIR__ . "../../../resources/email/newsalert_bottom.php"));
         $new_content_text = $content_text . $unsub_text;
-             
+
         $mail = new PHPMailer();
         
         $mail->CharSet = 'utf-8';
@@ -99,9 +97,9 @@ while ($arr = mysqli_fetch_array($result)) {
         
         if (!$mail->send()) {
             $error_info .= $mail->ErrorInfo;
-            $error_count = $error_count + 1;
+            $error_count += 1;
         } else {
-            $sent_count = $sent_count + 1;
+            $sent_count += 1;
 
             $myquery = "update `newsalert` set sent_mail = '1', sent_date = now() where id = '" . $arr["id"] . "'";
             $MySecResult = query($myquery);
@@ -111,6 +109,6 @@ while ($arr = mysqli_fetch_array($result)) {
 
 echo $sent_count .  " messages sent.<br>";
 echo $error_count .  " not send.";
-if($error_info){
+if($error_info !== '' && $error_info !== '0'){
     echo 'Error info: ' . $error_info . '<br>';
 }

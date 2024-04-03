@@ -41,9 +41,10 @@ if (!isset($_SESSION['m3cms']['password'])) {
 $_SESSION['m3cms']['user_id'] = 0;
 $_SESSION['m3cms']['group_id'] = '';
 
-$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-$username = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING);
-$password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
+$token = isset($_POST['token']) ? $_POST['token'] : null;
+$username = isset($_POST['user']) ? $_POST['user'] : null;
+$password = isset($_POST['passwd']) ? $_POST['passwd'] : null;
+
 // login
 if ($username && $password && $token === $_SESSION['m3cms']['token']) {
     $_SESSION['m3cms']['username'] = $username;

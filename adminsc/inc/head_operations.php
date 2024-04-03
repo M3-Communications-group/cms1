@@ -2,7 +2,6 @@
 
 //ini_set("memory_limit", "32M");
 require "mysql_connect.php";
-$error_reporting = SITE_ERRORS;
 
 require "functions_site.php";
 require "functions_cms.php";
@@ -55,7 +54,8 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
     $custom_where = '';
     $custom_limit = 50;
 
-    $table = filter_input(INPUT_GET, "table", FILTER_SANITIZE_STRING);
+    $table = isset($_GET["table"]) ? $_GET["table"] : null;
+
     $table_name = '';
     $table_categories = '';
     $table_categories_query = '';
@@ -93,7 +93,7 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
         $menu_html .=    '<div class="collapse" id="menuCms">';
         $menu_html .=        '<ul class="sub-menu">';
         $menu_html .=            '<li class="menu-item ms-3" style="padding-left:1px">
-                                        <a href="modal.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link" data-bs-toggle="modal" data-bs-target="#Modal">
+                                        <a href="modal.php?admin_option=0&action=add&table=m3cms_sitemap" class="menu-link addLink" data-bs-toggle="modal" data-bs-target="#ModalAdd">
                                             <span class="menu-text" style="margin-left:-19px">Add</span>
                                         </a>
                                     </li>';
@@ -188,8 +188,6 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
                     }
                 }
             } else {
-                //die("No rights");
-
                 $orig_edit_id = intval($editID);
                 $editID = '';
                 $current_item = array();
@@ -283,7 +281,7 @@ if ($_SESSION['m3cms']['user_id'] > 0) {
         include("inc/templates/$table" . "_more.php");
     }
 } else if ($localfile != 'index.php') {
-    mysqli_close();
+    mysqli_close($sqlConn);
     header("Location: index.php");
     die();
 }

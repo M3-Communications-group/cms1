@@ -3,31 +3,32 @@
 $_GET["action"] = 'view';
 $action = 'view';
 
-require("inc/head.php");
+require(__DIR__ . "/inc/head.php");
 
 $showform = true;
 $err = '';
 
-if (filter_input(INPUT_POST, "change")) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["change"])) {
+    
+    $newPass = isset($_POST["new_password"]) ? $_POST["new_password"] : null;
+    $confirm = isset($_POST["new_password1"]) ? $_POST["new_password1"] : null;
+    $oldPass = isset($_POST["old_password"]) ? $_POST["old_password"] : null;
 
-    $newPass = filter_input(INPUT_POST, "new_password", FILTER_SANITIZE_STRING);
-    $confirm = filter_input(INPUT_POST, "new_password1", FILTER_SANITIZE_STRING);
-    $oldPass = filter_input(INPUT_POST, "old_password", FILTER_SANITIZE_STRING);
-    $myq = "SELECT `password` FROM `m3cms_users` "
-            . " WHERE `id`='" . mysqli_real_escape_string($sqlConn, $_SESSION['m3cms']['user_id']) . "' 
-			AND `expires` > NOW()";
+    
+    $myq = "SELECT `password` FROM `m3cms_users` WHERE `id` = ?";
     $res = query($myq);
     
-	if (mysqli_num_rows($res) == 0 || !password_verify($oldPass, mysqli_fetch_array($res)["password"])) {
+	if (!$res || mysqli_num_rows($res) === 0 || !password_verify($oldPass, mysqli_fetch_array($res)["password"])) {
         $err .= $admin_texts[$lang]["password_wong_old"] . '<br>';
     }
-    if (preg_match("/[^-a-zA-Z0-9.,?!@#$%^&*()_+=|~<>;:]+/", $newPass)) {
+
+    if (!preg_match("/[^-a-zA-Z0-9.,?!@#$%^&*()_+=|~<>;:]+/", $newPass)) {
         $err .= $admin_texts[$lang]["password_invalid_symbols"] . "<br>";
     }
     if (strlen($newPass) < 8) {
         $err .= $admin_texts[$lang]["password_min8"] . "<br>";
     }
-    if (!preg_match("/[0-9]+/", $newPass)) {
+    if (!preg_match("/\\d+/", $newPass)) {
         $err .= $admin_texts[$lang]["password_one_number"] . "<br>";
     }
     if (!preg_match("/[a-z]+/", $newPass)) {
@@ -39,7 +40,8 @@ if (filter_input(INPUT_POST, "change")) {
     if ($newPass != $confirm) {
         $err .= $admin_texts[$lang]["passwords_dont_match"] . '<br>';
     }
-    if (empty($err)) {
+    
+    if ($err === '' || $err === '0') {
         $new = password_hash($newPass, PASSWORD_DEFAULT);
         $myq = "UPDATE m3cms_users SET password = '" . mysqli_real_escape_string($sqlConn, $new) . "' WHERE `id`='" . (int) $_SESSION['m3cms']["user_id"] . "' AND `expires`>NOW()";
         query($myq);
@@ -94,4 +96,4 @@ if ($showform) {
      
      
 }
-require("inc/bottom.php");
+require(__DIR__ . "/inc/bottom.php");
