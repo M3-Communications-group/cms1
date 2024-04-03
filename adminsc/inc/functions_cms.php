@@ -19,12 +19,20 @@ function make_menu($pid)
         $menu_html .= '<li class="menu-title">Main menu</li>';
 
         while ($row = mysqli_fetch_array($myResult)) {
-            if ($row['has_children'] == 0 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
+            if ($row['has_children'] == 0 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24 && $row['id'] != 18) {
                 $menu_html .= '<li class="menu-item">';
                 $menu_html .=    '<a class="menu-link menu_lvl0" style="padding-left:1px" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '">';
                 $menu_html .=        '<span class="menu-icon"><img src = "images/icons/' . $row['name'] . '.svg" alt=""/></span>';
                 $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
                 $menu_html .=    '</a>';
+
+            } else if ($row['id'] == 18) {
+                $menu_html .= '<li class="menu-item">';
+                $menu_html .=    '<a class="menu-link menu_lvl0" style="padding-left:1px" href="' . $row['filename'] . '?admin_option=' . $row['id'] . '">';
+                $menu_html .=        '<span class="menu-icon"><img src = "images/icons/' . $row['name'] . '.svg" alt=""/></span>';
+                $menu_html .=        '<span class="menu-text">' . $row['name'] . '</span>';
+                $menu_html .=    '</a>';
+
             } else if ($row['has_children'] == 1 && $row['pid'] == 0 && $row['id'] > 14 && $row['id'] != 24) {
                 $menu_html .= '<li class="menu-item">';
                 $menu_html .=    '<a class="menu-link menu_lvl0 collapsed" style="padding-left:1px" data-bs-toggle="collapse" data-bs-target="#menu' . $row['id'] . '" href="#menu' . $row['id'] . '" data-bs-toggle="collapse">';
@@ -46,6 +54,7 @@ function make_menu($pid)
                     while ($child = mysqli_fetch_array($myResult2)) {
                         // Generate HTML for each child menu item
                         $menu_html .= '<li class="menu-item ms-0">';
+
                         $menu_html .=    '<a class="menu-link" href="' . $child['filename'] . '?admin_option=' . $child['id'] . '">';
 
                         if (strlen($child['name']) > 20) {
@@ -1305,7 +1314,7 @@ function commit($fields_to_manage, $table)
                             break;
                         }
                         $img_src_size = getimagesize($copyDIR . $copyURL);
-                        
+
                         $img_params = explode("|", $auto_image);
                         $src_propotion = $img_src_size[0] / $img_src_size[1];
 
@@ -1364,7 +1373,7 @@ function commit($fields_to_manage, $table)
                                 $cropped_height = $img_src_size[1];
                                 // start
                                 $desired_propotion = $new_width / $new_height;
-                                
+
                                 if ($src_propotion < $desired_propotion) { // The width will be cropped
                                     $cropped_height = round($img_src_size[0] / $desired_propotion); // The new height equals the width divided by the desired aspect ratio
                                     $cropped_y = ($img_src_size[1] - $cropped_height) / 2; // To catch the middle
@@ -1372,7 +1381,7 @@ function commit($fields_to_manage, $table)
                                     $cropped_width = round($img_src_size[1] * $desired_propotion); // The new width equals the height multiplied by the desired aspect ratio.
                                     $cropped_x = ($img_src_size[0] - $cropped_width) / 2; // to catch the middle
                                 }
-                                
+
                                 $im_cropped = imagecreatetruecolor($cropped_width, $cropped_height);
                                 imagecopy($im_cropped, $im_src, 0, 0, $cropped_x, $cropped_y, $cropped_width, $cropped_height);
                                 imagecopyresampled($im_dst, $im_cropped, 0, 0, 0, 0, $new_width, $new_height, $cropped_width, $cropped_height);
@@ -1385,15 +1394,15 @@ function commit($fields_to_manage, $table)
                                 $cropped_height = $img_src_size[1];
                                 // start
                                 $desired_propotion = $new_width / $new_height;
-                                
+
                                 if ($src_propotion < $desired_propotion) { // The resizing will be done by width, and space will be added to the height // instead of cropping by width
                                     $cropped_width = round($img_src_size[1] * $desired_propotion); // The new width equals the height multiplied by the desired aspect ratio
                                     $cropped_x = ($cropped_width - $img_src_size[0]) / 2; // do catch the middle
-                                } else { 
+                                } else {
                                     $cropped_height = round($img_src_size[0] / $desired_propotion); // The new height equals the width divided by the desired aspect ratio
                                     $cropped_y = ($cropped_height - $img_src_size[1]) / 2; // to catch the middle
                                 }
-                                
+
                                 $im_cropped = imagecreatetruecolor($cropped_width, $cropped_height);
                                 $bgcolor = imagecolorat($im_src, 1, 1);
                                 imagefilledrectangle($im_cropped, 0, 0, $cropped_width, $cropped_height, $bgcolor);
@@ -1590,7 +1599,7 @@ function check_user_permission($category_id, $type)
         return 1;
     }
 
-    global $sqlConn; 
+    global $sqlConn;
 
     $myquery = "SELECT * FROM m3cms_access LEFT JOIN m3cms_sitemap ON m3cms_access.sitemap_id = m3cms_sitemap.id WHERE m3cms_access.group_id = ? AND m3cms_sitemap.id = ?";
     $stmt = mysqli_prepare($sqlConn, $myquery);

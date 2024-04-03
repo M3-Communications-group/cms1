@@ -142,4 +142,6 @@ require(__DIR__ . "/inc/bottom.php");
     $('textarea').addClass('form-control');
     $('input').addClass('form-control');
     $('select').addClass('form-select');
+    $("ul.pagination").addClass("my-2");
+   
 </script>
