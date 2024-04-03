@@ -3,10 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>PlaceHolder title name</title>
+    <title>Admin tool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="images\statehouse_crest.jpg">
@@ -18,8 +21,6 @@
     <script src="assets/js/head.js"></script>
 
     <!-- Bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="app-style" />
 
@@ -28,14 +29,74 @@
 
     <!-- Icons css -->
     <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css?version=2">
     <link rel="stylesheet" type="text/css" href="css/app.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
+    <!-- Switchery CSS -->
+    <link rel="stylesheet" href="css\switchery.min.css">
+
     <!-- Custom JavaScript -->
     <script src="assets/js/head.js"></script>
     <script src="assets/js/app.min.js"></script>
+    <script language="JavaScript">
+        function del(delurl) {
+            if (confirm('Do You really want to delete this element?')) {
+                if (confirm('Item deleted')) {
+                    tmp = document.getElementById('mycustsearchform');
+                    if (tmp != null && (tmp.method == 'POST' || tmp.method == 'post')) {
+                        tmp.action = delurl;
+                        tmp.submit();
+                    } else {
+                        location.href = delurl;
+                    }
+                }
+            }
+        }
+
+        function change_status(delurl) {
+            location.href = delurl;
+        }
+
+        function toggle_visibility(element, element_img) {
+            var tmp = element.style;
+            var tmp_img = element_img.src;
+            if (tmp.display == 'block') {
+                tmp.display = 'none';
+                element_img.src = 'images/link_plus.gif';
+            } else {
+                tmp.display = 'block';
+                element_img.src = 'images/link_minus.gif';
+            }
+        }
+
+        function openWindow(mypage, myname, w, h, scroll) {
+            var winl = (screen.width - w) / 2;
+            var wint = (screen.height - h) / 2;
+            winprops = 'height=' + h + ',width=' + w + ',top=' + wint + ',left=' + winl + ',scrollbars=' + scroll + ',resizable'
+            gmtWindow = window.open(mypage, myname, winprops)
+            if (parseInt(navigator.appVersion) >= 4) {
+                gmtWindow.window.focus();
+            }
+        }
+
+        function make_dependency(myindex, mydiv) {
+            // alert(myindex.value);
+            tmp = document.getElementById(mydiv);
+            tmp.innerHTML = eval('dep_' + mydiv + '_' + myindex.value);
+        }
+
+        function toggle_color(element) {
+            var tmp = element.style;
+            if (tmp.background == '') {
+                tmp.background = '#efefef';
+            } else {
+                tmp.background = '';
+            }
+        }
+    </script>
 </head>
 
 <body class="pt-0 mt-0">
@@ -50,17 +111,17 @@
             <div class="app-menu">
 
                 <!-- Brand Logo -->
-                <div class="logo-box my-4">
+                <div class="logo-box">
                     <!-- Brand Logo Light -->
                     <a href="main.php" class="logo-light">
-                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 10dvh;max-height: 125px; min-height: 83px;">
-                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh;max-height: 47px; min-height: 30px;">
+                        <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 60px;">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                     </a>
 
                     <!-- Brand Logo Dark -->
                     <a href="main.php" class="logo-dark">
-                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 10dvh; max-height: 125px; min-height: 83px;">
-                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh;max-height: 47px; min-height: 30px;">
+                        <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 60px;">
+                        <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                     </a>
                 </div>
 
@@ -139,14 +200,14 @@
                             <div class="logo-box">
                                 <!-- Brand Logo Light -->
                                 <a href="main.php" class="logo-light">
-                                    <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 10dvh; max-height: 47px;min-height:30px;">
-                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh; max-height: 47px;min-height:30px;">
+                                    <img src="images/statehouse_crest.jpg" alt="logo" class="logo-lg" style="height: 60px;">
+                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                                 </a>
 
                                 <!-- Brand Logo Dark -->
                                 <a href="main.php" class="logo-dark">
-                                    <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 10dvh; max-height: 47px;min-height:30px;">
-                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 5dvh; max-height: 47px;min-height:30px;">
+                                    <img src="images/statehouse_crest.jpg" alt="dark logo" class="logo-lg" style="height: 60px;">
+                                    <img src="images/statehouse_crest.jpg" alt="small logo" class="logo-sm" style="height: 40px;">
                                 </a>
                             </div>
 
@@ -197,7 +258,7 @@
                             <!-- Light/Darj Mode Toggle Button -->
                             <li class="d-none d-sm-inline-block">
                                 <div class="nav-link waves-effect waves-light" id="light-dark-mode">
-                                <i class="bi bi-brightness-high-fill me-2"></i> / <i class="bi bi-moon ms-2"></i>
+                                    <i class="bi bi-brightness-high-fill me-2"></i> / <i class="bi bi-moon ms-2"></i>
                                 </div>
                             </li>
 
@@ -217,7 +278,7 @@
                                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                                     <!-- item-->
                                     <div class="my-3">
-                                        <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change Password</a>
+                                        <a class="mx-2 fs-5 text text-primary" href="change_password.php?admin_option=1" style="color: #850208;">Change password</a>
 
                                     </div>
                                     <!-- item-->
@@ -238,14 +299,12 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        
 
                         <div class="row mt-5">
                         <?php
                         echo '
                         <table border="0" cellpadding="0" cellspacing="0">
                         <tr><td valign="top">';
-                        
 
 
                         $pname = '<a href="' . $_SERVER["PHP_SELF"] . '?table=' . $table . '&admin_option=' . $admin_option . '">' . $table_name . '</a>';
@@ -337,6 +396,11 @@
 
         <!-- Calendar init -->
         <script src="assets/js/pages/calendar.init.js"></script>
+
+        <!-- Switchery js -->
+        <script src="js\switchery.min.js"></script>
+        <script src="js\selectize.min.js"></script>
+
 
 </body>
 

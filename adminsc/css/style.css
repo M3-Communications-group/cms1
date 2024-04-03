@@ -15,8 +15,6 @@ body {
 }
 
 
-
-
 body,
 td,
 font,
@@ -412,9 +410,6 @@ div.userlogged1 {
     background-image: url(../images/li_selected.gif);
 }
 
-
-
-
 .date_day,
 .date_month,
 .date_year,
@@ -448,7 +443,6 @@ div.userlogged1 {
 
 body {
     background: #212121;
-    padding: 0px 0;
   }
   
   .footer-links {

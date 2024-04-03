@@ -6,27 +6,6 @@ session_start();
 $servername = filter_input(INPUT_SERVER, "HTTP_HOST", FILTER_SANITIZE_URL);
 $session_id = session_id();
 
-
-
-if (isset($_GET['logout'])) {
-    $myq = "UPDATE m3cms_users_log "
-            . " SET session_id = '', logged = '0' "
-            . " WHERE session_id = '" . $session_id . "'";
-    mysqli_query($sqlConn, $myq);
-    $_SESSION = array();
-    unset($_SESSION);
-    session_destroy();
-    mysqli_close($sqlConn);
-    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-    $host = $_SERVER['HTTP_HOST'];
-    header("Location: $protocol://$host/new1-statehouse.gov.sc/public/adminsc/index.php"); 
-    die();
-}
-
-
-
-
-/*
 if (isset($_GET['logout'])) {
     $myq = "UPDATE m3cms_users_log "
             . " SET session_id = '', logged = '0' "
@@ -39,8 +18,6 @@ if (isset($_GET['logout'])) {
     header("Location: http://" . $servername . '/');
     die();
 }
-*/
-//OLD Login 
 
 date_default_timezone_set('Europe/Sofia');
 $_SESSION['ip'] = filter_input(INPUT_SERVER, "REMOTE_ADDR", FILTER_VALIDATE_IP);
@@ -64,9 +41,10 @@ if (!isset($_SESSION['m3cms']['password'])) {
 $_SESSION['m3cms']['user_id'] = 0;
 $_SESSION['m3cms']['group_id'] = '';
 
-$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-$username = filter_input(INPUT_POST, 'user', FILTER_SANITIZE_STRING);
-$password = filter_input(INPUT_POST, 'passwd', FILTER_SANITIZE_STRING);
+$token = isset($_POST['token']) ? $_POST['token'] : null;
+$username = isset($_POST['user']) ? $_POST['user'] : null;
+$password = isset($_POST['passwd']) ? $_POST['passwd'] : null;
+
 // login
 if ($username && $password && $token === $_SESSION['m3cms']['token']) {
     $_SESSION['m3cms']['username'] = $username;

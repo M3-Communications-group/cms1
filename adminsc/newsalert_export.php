@@ -1,4 +1,4 @@
-<? 
+<?
 ini_set("memory_limit", "32M");
 require("../inc/config.php");
 require("../inc/mysql_connect.php");
@@ -10,7 +10,7 @@ require("inc/auth.php");
 $_GET["admin_option"] = 25;
 locate_position(25);
 
-if($_SESSION["perm_view"] != 1) {
+if ($_SESSION["perm_view"] != 1) {
 	die("Not allowed!");
 }
 
@@ -33,11 +33,12 @@ echo '
 		<td width="100" align="center"><b>Category</b></td>
 	</tr>
 ';
-while ($row = mysql_fetch_array($MyResult)) {
+$result = mysqli_query($sqlConn, $MyResult);
+while ($row = mysqli_fetch_array($result) ) {
 	echo '
 		<tr>
-			<td>'.$row["email"].'</td>
-			<td>'.$row["name"].'</td>
+			<td>' . $row["email"] . '</td>
+			<td>' . $row["name"] . '</td>
 		</tr>
 	';
 }
@@ -45,4 +46,3 @@ echo '
 <table>
 </body>
 </html>';
-?>
